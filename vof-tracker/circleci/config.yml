@@ -1,59 +1,43 @@
 defaults: &defaults
-  docker:
-    - image: sedzsoft/vof-ci-image
-      environment:
-        PGUSER: 
-        RAILS_ENV: test
-        DATABASE_URL: 
-
-    - image: circleci/postgres:9.6
-      environment:
-        adapter: postgresql
-        encoding: unicode
-        username: <%= ENV['POSTGRES_USER'] %>
-        password: <%= ENV['POSTGRES_PASSWORD'] %>
-        host: <%= ENV['POSTGRES_HOST'] %>
-        database: <%= ENV['POSTGRES_TEST_DB'] %>
-
-  working_directory: ~/app
-
-version: 2
-jobs:
-  build:
-    docker:
-       - image: sedzsoft/vof-ci-image
-    working_directory: ~/vof
-
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          - v1-dependencies-
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-        
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
-
-   setup vof source code:
-     <<: *defaults
-      - run:
-          name: clone the code
-          steps:
-          - checkout
-          - restore_cache:
+  version: 2
+  jobs:
+    build:
+      docker:
+        - image: sedzsoft/vof-ci-image
+          environment:
+            - VOF_PATH=~/vof
+            - PG_HOST=localhost
+            - PG_USER=ubuntu
+            - RAILS_ENV=test
+            - RACK_ENV=test
+        - image: postgres:9.5
+          environment:
+            - POSTGRES_USER=ubuntu
+            - POSTGRES_DB=db_name
+      working_directory: ~/vof
+      steps:
+        - checkout
+        - restore_cache:
             keys:
-            - v1-dependecies-{{ checksum "Gemfile.lock" }}
-            - v1-dependecies-
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
+        - save_cache:
+            paths:
+              - ./vendor/bundle
+            key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+        - run:
+            name: Install System Dependencies
+            command: apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev rake
+        - run:
+            name: Install Ruby Dependencies
+            command: bundle install
+        - run: 
+            name: Set up DB
             command: |
-              git clone https://github.com/andela/vof-tracker.git
+              bundle exec rake db:create db:schema:load --trace
+              bundle exec rake db:migrate
+          environment:
+            DATABASE_URL: "postgres://ubuntu@localhost:5432/db_name"
 
    test:
      <<: *defaults
@@ -65,8 +49,8 @@ jobs:
             keys:
             - v1-dependecies-{{ checksum "Gemfile.lock" }}
             - v1-dependecies-
-
           command: |
+            set +e
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
             
@@ -75,7 +59,6 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
                             "${TEST_FILES}"
-
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
