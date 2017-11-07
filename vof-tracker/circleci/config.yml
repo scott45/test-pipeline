@@ -1,48 +1,71 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
+defaults: &defaults
+  docker:
+    - image: sedzsoft/vof-ci-image
+      environment:
+        PGUSER: 
+        RAILS_ENV: test
+        DATABASE_URL: 
+
+    - image: circleci/postgres:9.6
+      environment:
+        adapter: postgresql
+        encoding: unicode
+        username: <%= ENV['POSTGRES_USER'] %>
+        password: <%= ENV['POSTGRES_PASSWORD'] %>
+        host: <%= ENV['POSTGRES_HOST'] %>
+        database: <%= ENV['POSTGRES_TEST_DB'] %>
+
+  working_directory: ~/app
+
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
        - image: sedzsoft/vof-ci-image
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
+    working_directory: ~/vof
 
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-
       - save_cache:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
         
-      # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
-      # run tests!
+   setup vof source code:
+     <<: *defaults
+      - run:
+          name: clone the code
+          steps:
+          - checkout
+          - restore_cache:
+            keys:
+            - v1-dependecies-{{ checksum "Gemfile.lock" }}
+            - v1-dependecies-
+            command: |
+              git clone https://github.com/andela/vof-tracker.git
+
+   test:
+     <<: *defaults
       - run:
           name: run tests
+          steps:
+          - checkout
+          - restore_cache:
+            keys:
+            - v1-dependecies-{{ checksum "Gemfile.lock" }}
+            - v1-dependecies-
+
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
@@ -53,7 +76,6 @@ jobs:
                             --format progress \
                             "${TEST_FILES}"
 
-      # collect reports
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
