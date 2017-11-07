@@ -1,21 +1,28 @@
 # vof-pipeline
 defaults: &defaults
+  docker:
+    - image: sedzsoft/vof-ci-image
+      environment:
+        - VOF_PATH=~/vof
+        - PG_HOST=localhost
+        - PG_USER=ubuntu
+        - RAILS_ENV=test
+        - RACK_ENV=test
+    - image: postgres:9.5
+      environment:
+        - POSTGRES_USER=ubuntu
+        - POSTGRES_DB=db_name
+
+  working_directory: ~/vof
+
 version: 2
 jobs:
   build:
     docker:
       - image: sedzsoft/vof-ci-image
-        environment:
-          - VOF_PATH=~/vof
-          - PG_HOST=localhost
-          - PG_USER=ubuntu
-          - RAILS_ENV=test
-          - RACK_ENV=test
-      - image: postgres:9.5
-        environment:
-          - POSTGRES_USER=ubuntu
-          - POSTGRES_DB=db_name
+
     working_directory: ~/vof
+      
     steps:
       - checkout
       - restore_cache:
