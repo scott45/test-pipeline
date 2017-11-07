@@ -1,0 +1,2 @@
+class FrameworksController < ApplicationController
+end

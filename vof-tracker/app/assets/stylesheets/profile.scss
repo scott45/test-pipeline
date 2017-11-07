@@ -1,0 +1,188 @@
+// Place all the styles related to the Profile controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.assessment-margin {
+  margin-left: 50px !important;
+  margin-right: 50px;
+}
+
+.assessment_name {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.assessment-section {
+  margin: -12px auto -12px auto;
+  padding: 10px 0px;
+}
+
+.camper_details {
+  font-weight: 300;
+}
+
+.comment-box {
+  font-size: 0.8em;
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 20px;
+  resize: none;
+
+  &:focus {
+    outline: none !important;
+    border-bottom: 2px solid rgb(51, 89, 223) !important;
+  }
+
+  + label {
+    color: #9e9e9e;
+  }
+}
+
+#comments-label {
+  margin-left: 0px !important;
+}
+
+.comment-area {
+  padding: 10px;
+  margin-bottom: -12px;
+}
+
+.checked {
+  background-color: #f0405e !important;
+  color: #fff !important;
+  border: 1px solid #f0405e !important;
+}
+
+.grade-section {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: -12px;
+  padding: 10px;
+}
+
+.grade-button {
+  background-color: #f2f2f2;
+  border: 1px solid #e6e6e6;
+  margin-right: 3px;
+  padding: 5px 17px !important;
+  float: left;
+  cursor: auto !important;
+
+  @media only screen and (min-width : 480px) {
+    padding: 7px 24px !important;
+  }
+
+  &.enabled:hover {
+  background-color: #f0405e;
+  color: #000;
+  cursor: pointer !important;
+  }
+}
+
+.submit-score-wrapper {
+  margin-bottom: 3em;
+  @media only screen and (max-width : 479px) {
+    text-align: center;
+  }
+}
+
+.info-icon {
+  margin-left: 5px;
+  vertical-align: initial;
+  font-size: 1.3em;
+  color: #3359DF;
+}
+
+.modal-context {
+  margin-bottom: 10px;
+  font-size: 1.2em !important;
+  span {
+    font-size: 15px;
+  }
+}
+
+.radio-wrapper {
+  position: relative;
+}
+
+.input-wrapper {
+  position: relative;
+
+  input ~ label {
+    margin-left: unset !important;
+  }
+
+  input[type='radio'] {
+    visibility: hidden !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: initial !important;
+
+    &:before {
+      content: "";
+      border: unset !important;
+      visibility: hidden;
+    }
+
+    &:after {
+      content: "";
+      border: unset !important;
+      visibility: hidden;
+    }
+  }
+}
+
+.score-guide {
+  background-color: #3359DF;
+  color: #fff;
+  padding: 10px
+}
+
+.score-guide-header {
+  text-align: center;
+  padding-top: 0.75em !important;
+  padding-bottom: 0.75em !important;
+  margin-left: 20px !important;
+  margin-bottom: 5px !important;
+  text-transform: uppercase !important;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.scores-dropdown input.select-dropdown {
+  width: 15em;
+}
+
+.select-wrapper ul li span {
+  color: #000 !important;
+}
+
+.score-section {
+  margin-top: 2.25em;
+}
+
+.status-color-icon {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  position: relative;
+  top: 3px;
+  border-radius: 50%;
+  left: 6px;
+}
+
+.table-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.tbody-content {
+  text-align: left;
+}

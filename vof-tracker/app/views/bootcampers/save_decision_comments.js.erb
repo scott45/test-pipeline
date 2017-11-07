@@ -1,0 +1,32 @@
+<%-# close modal after create -%>
+$('.modal').modal('close'); 
+<%-# Display a flash message -%>
+var message = "<%= flash[:notice] == 'decision-comments-success' ? 'Decision Comments Saved Successfully' : flash[:error] %>";
+Materialize.toast(message, 5000);
+<%-# reset the form fields -%>
+$('#decision_one_comment').val("")
+$('#decision_two_comment').val("")
+
+<%-# displays decision one and two label -%>
+<% decision_one = decision_comments(@bootcamper[:decision_one_comment]) %>
+<% decision_two = decision_comments(@bootcamper[:decision_two_comment]) %>
+
+$('#decision_one_label_<%= @bootcamper[:camper_id]%>').html("<%= j decision_one.nil? ? 'No comment' : decision_one.truncate(20) %>")
+$('#decision_two_label_<%= @bootcamper[:camper_id]%>').html("<%= j decision_two.nil? ? 'No comment' : decision_two.truncate(20) %>")
+
+<%-# updates the dropdown content -%>
+$('#decision_one_<%= @bootcamper[:camper_id]%>').html("<%= j decision_one.nil? ? 'No comment' : decision_one %>")
+$('#decision_two_<%= @bootcamper[:camper_id]%>').html("<%= j decision_two.nil? ? 'No comment' : decision_two %>")
+
+<%-# displays dropdown content properly when the length of the text is <= 19 -%>
+<% if decision_one.present? && decision_one.length <= 19 || decision_one.nil? %>
+  $('#decision_one_<%= @bootcamper[:camper_id]%>').addClass('align-center')
+<% else %>
+  $('#decision_one_<%= @bootcamper[:camper_id]%>').removeClass('align-center')
+<% end %>
+
+<% if decision_two.present? && decision_two.length <= 19 || decision_two.nil? %>
+  $('#decision_two_<%= @bootcamper[:camper_id]%>').addClass('align-center')
+<% else %>
+  $('#decision_two_<%= @bootcamper[:camper_id]%>').removeClass('align-center')
+<% end %>

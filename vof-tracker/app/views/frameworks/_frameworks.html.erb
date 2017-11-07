@@ -1,0 +1,25 @@
+<div class="row output" id="frameworks-table">
+  <div class="cms-frameworks-table">
+    <table class="bordered">
+      <thead class="assessment">
+        <tr class="frameworks-wrapper table-header">
+          <th class="frameworks-header curricula-header">Framework<i id="frameworks-filter-icon" class="fa fa-sort-amount-desc icon-sort" aria-hidden="true"></i></th>
+          <th class="frameworks-description curricula-header">Description</th>
+        </tr>
+      </thead>
+
+      <tbody class="frameworks-table-body">
+        <% @content[:frameworks].each do |framework| %>
+        <tr id="framework-row-<%= framework.id %>" class="framework-row-wrapper">
+          <td class="framework-name name"><span><%= framework.name %></span></td>
+          <td class="framework-description description">
+            <span>
+              N/A
+           </span>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="<%= logout_path %>">Logout</a></li>
+</ul>
+<nav class="app-header">
+<div class="nav-wrapper">
+  <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons menu-icon">menu</i></a>
+  <div class="left">
+    <%= link_to(index_path) do %>
+      <div class="logo">
+        <%= image_tag("logo.png", :style => "width:35px; height: auto;") %>
+      </div>
+      <div class="app-name">
+        <h1 style="">VOF Tracker</h1>
+      </div>
+    <% end %>
+  </div>
+  <% if session[:current_user_info][:andelan] %>
+  <div class="center ">
+    <%= form_tag index_path, method: "get", class: "form-inline"  do %>
+      <%= text_field_tag :search, params[:search], class: "form-control searchbar", placeholder: "Search by name or email..." %>
+      <% submit_tag "", name: nil%>
+    <% end %>
+    <%= button_tag "", class: "clear" do %>
+      <i class="material-icons delete-icon">clear</i>
+    <% end %>
+  </div>
+  <% end %>
+
+  <ul id="logout"  class="right hide-on-med-and-down">
+    <li>
+      <img src= "<%= session[:current_user_info][:picture] %>"
+            alt= "avatar" class="avatar" style="border-radius: 50%; border: 2px solid #6E87EE;"/>
+    </li>
+    <li>
+      <a class="dropdown-button" href="#!" data-activates="dropdown1" style="height: 57px;">
+        <%= session[:current_user_info][:name] %>
+        <i class="material-icons right">arrow_drop_down</i>
+      </a>
+    </li>
+  </ul>
+
+  <ul id="nav-mobile" class="side-nav">
+    <li id="side-logout">
+      <div>
+        <ul>
+          <li>
+            <img src= "<%= session[:current_user_info][:picture] %>"
+                 alt= "avatar" class="avatar" style="border-radius: 50%; border: 2px solid #6E87EE;"/>
+          </li>
+          <li id="logout-btn">
+            <%= session[:current_user_info][:name] %>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <div class="menu-item-div">
+        <ul>
+          <% if authorized_learner? %>
+            <li class="menu-item" id="my_profile_mobile">
+              <%= link_to learner_path, :target => "_self" do %>
+              My Profile
+              <i class="material-icons left">person</i>
+              <% end %>
+            </li>
+            <li class="menu-item" id="learning_outcomes_mobile">
+              <%= link_to  learning_outcomes_path, :target => "_self" do %>
+              Learning Outcomes
+              <i class="material-icons left">airplay</i>
+              <% end %>
+            </li>
+            <li class="menu-item" id="faqs_mobile">
+              <%= link_to  faqs_path, :target => "_self" do %>
+              FAQs
+              <i class="material-icons left">question_answer</i>
+              <% end %>
+            </li>
+          <% else %>
+            <li class="menu-item" id="home_mobile">
+              <%= link_to  index_path,:target => "_self" do %>
+                  Home
+                  <i class="material-icons left">home</i>
+              <% end %>
+            </li>
+            <% if admin? %>
+            <li class="menu-item" id="add_campers_mobile">
+              <%= link_to bootcampers_path, :target => "_self" do %>
+                  Add Learners
+                  <i class="material-icons left">accessibility</i>
+              <% end %>
+            </li>
+            <% end %>
+            <li class="menu-item" id="content_management_mobile">
+              <%= link_to content_management_path, :target => "_self"  do %>
+                Content Management
+                  <i class="material-icons left">settings</i>
+              <% end %>
+            </li>
+            <li class="menu-item" id="support_mobile">
+              <%= link_to support_path, :target => "_self"  do %>
+                Support
+                  <i class="material-icons left">help</i>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <% if admin? %>
+      <div class="menu-item-div">
+        <ul>
+          <li class="menu-item">
+            <a href="/?format=csv&city=<%= params[:city] %>&cycle=<%= params[:cycle] %>&decision_one=<%= params[:decision_one] %>&decision_two=<%= params[:decision_two] %>&week_one_lfa=<%= params[:week_one_lfa] %>&week_two_lfa=<%= params[:week_two_lfa]%>">
+              Download CSV
+              <i class="material-icons left">file_download</i>
+            </a>
+          </li>
+          <li id="sidenav-criterion-modal" class="menu-item">
+            <a href="#">
+              Add Criterion
+              <i class="material-icons left">donut_small</i>
+            </a>
+          </li>
+          <li id="sidenav-output-modal"class="menu-item" >
+            <a href="#">
+              Add Output
+              <i class="material-icons left">open_in_new</i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <% end %>
+      <div class="menu-item-div">
+        <ul>
+          <li class="menu-item" id="logout_mobile">
+            <%= link_to logout_path, :target => "_self"  do %>
+              Log Out
+                <i class="material-icons left">power_settings_new</i>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+</nav>
+<%= render("layouts/navbar")%>

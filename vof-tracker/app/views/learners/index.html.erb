@@ -1,0 +1,315 @@
+<div class="learner page">
+    <%# header-section %>
+    <div class="header-section">
+      <div class="container header-wrapper">
+        <div class="row">
+          <div class="col s6 m6 offset-s3 offset-m3 offset-l0 l2 center-align learner-image">
+            <% resized_profile_image = session[:current_user_info][:picture].gsub('sz=50', 'sz=150') %>
+            <img  src= "<%= resized_profile_image %>" alt="Profile Image" />
+          </div>
+          <div class="col s12 m12 l6">
+            <h3><%= session[:current_user_info][:name] %></h3>
+            <div class="learner-item-wrapper">
+              <div class="row basic-profile-wrapper">
+                <div class="col s12 m5 l6 learner-item ">
+                  <i class="material-icons icon-field icon-email">email</i>
+                  <span class="icon-text"><%= session[:current_user_info][:email] %></span>
+                </div>
+                <div class="col s12 m3 l6 learner-item">
+                  <i class="material-icons icon-field icon-location_on">location_on</i>
+                  <span class="icon-text"> Nairobi</span>
+                </div>
+                <div class="col s12 m4 l6 learner-item">
+                  <i class="material-icons icon-field icon-phone_iphone">phone_iphone</i>
+                  <span class="icon-text">0712235735</span>
+                </div>
+              </div>
+              <div class="row learner-item basic-profile-wrapper">
+                <div class="text-muted">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie nunc ut est congue dignissim.
+                  Nullam commodo ipsum sit amet orci mollis, vitae iaculis odio ultricies. Ut nulla lectus, mattis eget consequat
+                  eget, dictum et erat.
+                </div>
+              </div>
+              <div class="col s12 m8 learner-item icons resources-icon-group">
+                <div class="col s3 m2 l2 social-icon">
+                  <i class="fa fa-github"></i>
+                </div>
+                <div class="col s3 m2 l2 social-icon">
+                  <i class="fa fa-trello"></i>
+                </div>
+                <div class="col s3 m2 l2 social-icon">
+                  <i class="fa fa-linkedin"></i>
+                </div>
+                <div class="col s3 m2 l2 social-icon">
+                  <i class="fa fa-globe"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m3 l4 edit-profile button-group">
+            <button class="waves-effect waves-light btn btn-edit view-learner-element" id="edit-learner-profile"> Edit Profile </button>
+            <div class="edit-learner-element">
+              <button class="waves-effect waves-light btn btn-save" id="save-learner-profile"> Save Profile </button>
+            </div>
+          </div>
+        </div>
+        <%# /.row %>
+      </div>
+    </div>
+    <%# /. header-section %>
+    <div class="content-section">
+      <div class="container content-wrapper">
+        <div class="row">
+          <div class="col s12 m12 l8">
+            <section>
+              <div class="card basic-info-card">
+                <div class="card-content">
+                  <div class="row">
+                    <div class="col offset-l2 l10 m11 learner-content">
+                      <div class="card-title">
+                        <h4>basic information</h4>
+                      </div>
+                      <div class="basic-details">
+                        <%# email %>
+                        <div class="row item-detail">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-envelope"></i> Email:</p>
+                          </div>
+                          <div class="col s12 m7 l9 item-value"><%= session[:current_user_info][:email] %></div>
+                        </div>
+                        <%# /.email %>
+
+                        <%# location %>
+                        <div class="row item-detail">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-map-marker"></i> Location:</p>
+                          </div>
+                          <div class="col s12 m7 l9 item-value">Nairobi</div>
+                        </div>
+                        <%# /.location %>
+
+                        <%# phone %>
+                        <div class="row item-detail">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-phone"></i> Phone:</p>
+                          </div>
+                          <div class="col s12 m7 l9 item-value view-learner-element">0712235735</div>
+                          <input placeholder="Phone Number" id="phone" type="text"  value="0712235735"  class="validate col s12 m7 l7 item-value edit-learner-element">
+                        </div>
+                        <%# /.phone %>
+
+                        <%# gender %>
+                        <div class="row item-detail">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-transgender"></i> Gender:</p>
+                          </div>
+                          <div class="col s12 m7 l9 item-value view-learner-element">Male</div>
+                          <div class="col s12 m7 l9 item-value edit-learner-element radio-group">
+                            <p class="col s6 m4">
+                              <input  type="radio" class="with-gap" name="gender" id="male" checked="checked" />
+                              <label for="male">Male</label>
+                            </p>
+                            <p class="col s6 m4">
+                              <input  type="radio" class="with-gap" name="gender" id="female" />
+                              <label for="female">Female</label>
+                            </p>
+                            <p class="col s6 m4">
+                             <input  type="radio" class="with-gap" name="gender" id="other" />
+                              <label for="other">Other</label>
+                            </p>
+                          </div>
+                        </div>
+                        <%# /.gender %>
+
+                        <%# trello %>
+                        <div class="row item-detail edit-learner-element">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-trello"></i> Trello:</p>
+                          </div>
+                          <input placeholder="http://trello.com/account-name" id="trello" type="text"  value=""  class="validate col s12 m7 l7 item-value">
+                        </div>
+                        <%# /.trello %>
+
+                        <%# github %>
+                        <div class="row item-detail edit-learner-element">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-github"></i> Github:</p>
+                          </div>
+                          <input placeholder="http://github.com/username" id="github" type="text"  value=""  class="validate col s12 m7 l7 item-value">
+                        </div>
+                        <%# /.github %>
+
+                        <%# linkedin %>
+                        <div class="row item-detail edit-learner-element">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-linkedin"></i> LinkedIn:</p>
+                          </div>
+                          <input placeholder="http://linkedin.com/username" id="phone" type="text"  value=""  class="validate col s12 m7 l7 item-value">
+                        </div>
+                        <%# /.linkedin %>
+
+                        <%# website %>
+                        <div class="row item-detail edit-learner-element">
+                          <div class="col s12 m3 l3">
+                            <p><i class="fa fa-globe"></i> Website:</p>
+                          </div>
+                          <input placeholder="Your webisite url" id="website" type="text"  value=""  class="validate col s12 m7 l7 item-value">
+                        </div>
+                        <%# /.website %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            
+            <section>
+              <div class="card basic-info-card">
+                <div class="learner-content">
+                  <div class="card-content">
+                    <div class="row">
+                      <div class="col offset-l2 l9 m10 learner-content">
+                        <div class="card-title">
+                          <h4>About Me</h4>
+                        </div>
+                        <div class="tech-info-wrapper">
+                          <div class="view-learner-element">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent molestie nunc ut est congue dignissim.
+                            Nullam commodo ipsum sit amet orci mollis, vitae iaculis odio ultricies. Ut nulla lectus, mattis
+                            eget consequat eget, dictum et erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+                            molestie nunc ut est congue dignissim. Nullam commodo ipsum sit amet orci mollis, vitae iaculis odio
+                            ultricies. Ut nulla lectus, mattis eget consequat eget, dictum et erat.
+                          </div>
+                          <textarea id="about-me" class="materialize-textarea edit-learner-element" data-length="120">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elementum erat eu sollicitudin dictum. Nunc egestas, ex vitae pellentesque accumsan, urna dui varius sapien, non rutrum mauris neque in ligula. Aliquam a mi convallis, aliquam est non, consequat quam. Vivamus eget ipsum dictum, consequat ligula quis, condimentum est. Aliquam dignissim viverra laoreet. Etiam iaculis, metus sed iaculis iaculis, odio ipsum pulvinar mauris, sit amet dignissim ex libero sed urna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce tincidunt tincidunt libero quis placerat. Duis quis sapien ut nisl vulputate scelerisque. Donec fermentum ultrices nisi, eu accumsan ante rhoncus eu. Quisque a nisi eu diam mattis tempor. Proin porttitor ac arcu at placerat.
+                          </textarea>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="col s12 m12 l4">
+            <section>
+              <div class="card basic-info-card">
+                <div class="learner-tech-info">
+                  <div class="card-content">
+                    <div class="card-title">
+                      <h4>Technical Proficiency</h4>
+                    </div>
+                    <div class="tech-info-wrapper">
+                      <div class="tech-info">
+                        <h5>Preferred language/Framework</h5>
+                        <div class="learner-info">
+                          <h6 class="view-learner-element"> PHP/Laravel - Proficient </h6>
+                          <div class="input-field row edit-learner-element">
+                            <select class="col m7 l10">
+                              <option value="" disabled>Choose your option</option>
+                              <option value="1" selected>PHP/Laravel</option>
+                              <option value="2">JavaScript/MEAN/PEAN/PERN/MERN</option>
+                              <option value="3">Ruby/Ruby on Rails</option>
+                              <option value="3">Python/Django</option>
+                              <option value="3">C#/.NET</option>
+                              <option value="3">iOS/Objective C</option>
+                              <option value="3">Not on list (please specify in About Me)</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="proficiency language-proficiency edit-learner-element">
+                          <h5>Level of Proficiency</h5>
+                          <div class="learner-info">
+                            <div class="input-field row">
+                              <select class="col m7 l10">
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="curious">Curious</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="proficient">Proficient</option>
+                                <option value="expert">Expert</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tech-info">
+                        <h5>DLC language/Framework</h5>
+                        <div class="learner-info">
+                          <h6 class="view-learner-element"> PHP/Laravel - Proficient </h6>
+                          <div class="input-field row edit-learner-element">
+                            <select class="col m7 l10">
+                              <option value="" disabled>Choose your option</option>
+                              <option value="javascript">Java/Andriod</option>
+                              <option value="javascript">JavaScript/Node.js/Angular.js</option>
+                              <option value="python">Python/Django</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="proficiency dlc-proficiency edit-learner-element">
+                          <h5>Level of Proficiency</h5>
+                          <div class="learner-info">
+                            <div class="input-field row">
+                              <select class="col m7 l10">
+                                <option value="" disabled selected>Choose your option</option>
+                                <option value="curious">Curious</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="proficient">Proficient</option>
+                                <option value="expert">Expert</option>
+                              </select>
+                            </div>
+                          </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section>
+              <div class="card basic-info-card hide-on-overlay">
+                <div class="learner-tech-info">
+                  <div class="card-content">
+                    <div class="card-title">
+                      <h4>Activities</h4>
+                    </div>
+                    <div class="tech-info-wrapper">
+                      <div class="tech-info">
+                        <h5>Registered Since</h5>
+                        <div class="learner-info">
+                          <h6>
+                            May, 2017
+                          </h6>
+                        </div>
+                      </div>
+                      <div class="tech-info">
+                        <h5>Last Active</h5>
+                        <div class="learner-info">
+                          <h6>
+                            3 Min Ago
+                          </h6>
+                        </div>
+                      </div>
+                      <div class="tech-info">
+                        <h5>Programs</h5>
+                        <div class="learner-info">
+                          <h6>
+                            - Bootcamp-23 Nairobi
+                          </h6>
+                          <h6>
+                            - ALC-1 Nairobi
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="edit-learner-overlay edit-learner-element"></div>

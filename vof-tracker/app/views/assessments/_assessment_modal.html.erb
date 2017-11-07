@@ -1,0 +1,88 @@
+<div>
+  <div id="output-modal" class="modal modal-fixed-header">
+    <div class="modal-header" id="output-modal-header">
+      <div class="col s12 center">
+        <h5 class="modal-header-text">Add Output</h5>
+      </div>
+    </div>
+    <div class="modal-content">
+      <%= form_for @content[:assessment], remote: true do |f| %>
+        <div id="output-modal-body">
+          <div class="row">
+            <div class="col s12">
+              <div class="section">
+                <div class="row">
+                  <div class="col s12">
+                    <h5 class="section-header">Output Details</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <%= f.text_field :name, id:"assessment-name-id", class:"validate", required: "true"%>
+                    <%= f.label :name, "New Output" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field" id="description-textarea">
+                <%= f.text_area(:description, id:"assessment-description", class:"validate materialize-textarea", required: "true") %>
+                <%= f.label(:description, "Description", for:"description", id:"label-color") %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m6" id="select-field">
+              <%= f.label :name, "Framework", class:"select-label criteria-label", id:"label-color" %>
+              <%= select("framework_criterium", "framework_id", Framework.all.collect { |f| [f.name, f.id] },  :prompt => 'Select Framework', :id => "framework-id") %>
+            </div>
+            <div class="input-field col s12 m6" id="select-field">
+              <%= f.label :name, "Criterion", class:"select-label criteria-label", id:"label-color" %>
+              <%= select("framework_criterium", "criterium_id", { }, :prompt => 'Select Criterion', :id => "criterium-id") %>
+              <%= f.hidden_field :framework_criterium_id, id: "framework-criterium-id", class: "validate" %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="section">
+              <div class="row">
+                <div class="col s12">
+                  <h5 class="section-header" id="metric-text">Metrics</h5>
+                </div>
+              </div>
+              <div class="input-field col s12" id="select-field">
+                <%= f.text_area :context, id:"context", class:"validate materialize-textarea", required: "true"%>
+                <%= f.label :context %>
+              </div>
+              <div class="row">
+                <div class="col s12">
+                  <%= f.fields_for :metrics do |ff| %>
+                    <div class="input-field col s12 m6">
+                      <%= ff.text_field :description, id: ff.object.point.context, class:"validate", required: "true" %>
+                      <%= ff.label ff.object.point.context + " - "+ (ff.object.point.value.to_s), id:"label-color" %>
+                      <%= ff.hidden_field :point_id, id: ff.object.point.id %>
+                      <%= ff.hidden_field :id, id: "metric_" + ff.object.point.context %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col s6">
+                <%= f.submit "Save", class:"waves-effect waves-green btn btn-save", id:"add-output-save-button" %>
+              </div>
+              <div class="col s6">
+                <%= f.button "Cancel", class:"modal-action modal-close waves-effect
+                waves-green waves-light btn-cancel btn-flat", id:"add-output-cancel-button" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

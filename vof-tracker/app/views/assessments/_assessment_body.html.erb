@@ -1,0 +1,23 @@
+<tr id="<%= assessment.id %>" class="assessment-row assessment-section">
+  <td class="assessment-output"><span><%= assessment.name %></span></td>
+  <td class="assessment-description"><span><%= assessment.description %></span></td>
+  <td class="assessment-context"><span><%= assessment.context %></span></td>
+  <td class="assessment-metric">
+    <% assessment.metrics.each do |metrics| %>
+      <div class="points">
+        <%= metrics.point.value %>
+          <span class="scoring-metrics"><%= set_metric_description(metrics).gsub("\n","<br />").html_safe %></span>
+      </div>
+      <% end %>
+  </td>
+  <td class="assessment-framework"><span> <%= assessment.framework_criterium.framework.name %> </span></td>
+  <td class="assessment-criterion"><span> <%= assessment.framework_criterium.criterium.name %> </span></td>
+  <% if admin? %>
+    <td class="table-action">
+        <span>
+          <i class="material-icons edit-output-modal">edit</i>
+          <i class="material-icons icon-delete">delete</i>
+        </span>
+    </td>
+  <% end %>
+</tr>

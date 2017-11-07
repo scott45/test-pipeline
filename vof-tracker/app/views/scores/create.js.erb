@@ -1,0 +1,3 @@
+var message = "<%= flash[:notice] == 'score-success' ? 'Assessment(s) recorded' : 'Score(s) cannot be blank' %>";
+var color = "<%= flash[:notice] == 'score-success' ? 'black' : 'red' %>"
+Materialize.toast(message, 5000, color);

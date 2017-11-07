@@ -1,0 +1,58 @@
+// Place all the styles related to the frameworks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.curricula-header {
+  border-radius: 0px;
+}
+
+.frameworks-wrapper {
+  height: auto !important;
+  word-wrap: break-word;
+
+  .frameworks-header{
+    min-width: 180px;
+  }
+
+  .frameworks-description {
+    min-width: 420px;
+  }
+}
+
+.framework-row-wrapper{
+  word-wrap: break-word;
+
+  .framework-name {
+    min-width: 180px;
+  }
+
+  .framework-description {
+    min-width: 420px;
+    max-width: 420px;
+    padding-right: 15px;
+  }
+}
+
+.cms-frameworks-table {
+  overflow-x: scroll;
+  margin-right: 10px;
+
+  table {
+   min-width: 1200px;
+
+  td, th {
+    vertical-align: top;
+    border-radius: 0 !important;
+    font-weight: 400;
+  }
+ }
+}
+
+#frameworks-table {
+  margin-left: auto;
+  margin-top: 3%;
+}
+
+#frameworks-filter-icon {
+  margin-left: 5px;
+}

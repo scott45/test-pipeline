@@ -1,0 +1,125 @@
+<div class="container" id="learners-container">
+    <div class="row">
+        <div class="row" id="text">
+            <div class="col s10 offset-s1 m4">
+               <span id="learners-heading"><h4>Add Learners</h4></span>
+            </div>
+        </div>
+        <div class="row" id="text">
+            <div class="col">
+                <% if @error && @error[:error] %>
+                    <div id="error-link">
+                        <% if @error[:headers].count > 0 %>
+                            Please ensure the following <%= 'field'.pluralize(@error[:headers].count) %> <%= @error[:headers].count > 1 ? 'are' : 'is' %> available in the right order and <%= @error[:headers].count > 1 ? 'are' : 'is' %> correctly spelt:
+                            <% @error[:headers].each do |header| %>
+                                <li> <%= header %> </li>
+                            <% end %>
+                            <br>
+                        <% end %>
+                        <% if @error[:rows].count > 0 %>
+                            Please ensure the following <%= 'row'.pluralize(@error[:rows].count) %> <%= @error[:rows].count > 1 ? 'are' : 'is' %> filled completely and correctly:
+                            <br>
+                            <% @error[:rows].each do |row| %>
+                                <li> Row <%= row[:row] %> </li>
+                            <% end %>
+                        <% end %>
+                        <% if @error[:email].count > 0 %>
+                          <%= display_error_message(@error) %>
+                          <% @error[:email].each do |email| %>
+                            <li><%= email %></li>
+                          <% end %>
+                        <% end %>
+                    </div>
+                <% end %>
+                <% if @error && !@error[:error] %>
+                    <span id="success_link">
+                        <a href="<%= uploaded_cycle_url %>" target="_self">See Uploaded Cycle</a>
+                    <span>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <%= form_tag bootcampers_add_path, id: "upload-bootcampers", method: "post", multipart: true do %>
+        <div class="row">
+            <div class="row">
+                <div class="col s10 offset-s1 pull-m1 ">
+                    <h6 class="location">Hello <%= session[:current_user_info][:name] %>, please choose your location</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s10 offset-s1 m4">
+                    <label for="nigeria">
+                        <div class="card hoverable">
+                            <div class="card-image nigeria">
+                                <%= image_tag("nigeria_flag.gif")%>
+                            </div>
+                            <div class="card-action nigeria">
+                                <a class="grey-text text-darken-4" href="#">Nigeria</a>
+                            </div>
+                        </div>
+                        <input type="radio" name="country" id="nigeria" value="Nigeria">
+                    </label>
+                </div>
+                <div class="col s10 offset-s1 m4">
+                    <label for="kenya">
+                        <div class="card hoverable">
+                            <div class="card-image nairobi">
+                                <%= image_tag("kenya_flag.gif")%>
+                            </div>
+                            <div class="card-action nairobi">
+                                <a class="grey-text text-darken-4" href="#">Kenya</a>
+                            </div>
+                        </div>
+                        <input type="radio" name="country" id="kenya" value="Kenya">
+                    </label>
+                </div>
+                <div class="col s10 offset-s1 m4">
+                    <label for="uganda">
+                        <div class="card hoverable">
+                            <div class="card-image uganda">
+                                <%= image_tag("uganda_flag.gif")%>
+                            </div>
+                            <div class="card-action uganda">
+                                <a class="grey-text text-darken-4" href="#">Uganda</a>
+                            </div>
+                            <input type="radio" name="country" id="uganda" value="Uganda">
+                        </div>
+                    <label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row">
+                <div class="input-field col s10 offset-s1 m6 l3 campers" id="city">
+                    <%= label_tag("city", "City") %>
+                    <%= text_field_tag("city", nil, {id: "autocomplete-input", class: "autocomplete validate"}) %>
+                </div>
+                <div class="input-field col s10 offset-s1 m6 l3 campers">
+                    <%= label_tag("application-input", "Application Cycle Number") %>
+                    <%= text_field_tag("application_cycle", nil, {id: "application-cycle", class: "validate", type: "number"}) %>
+                </div>
+                <div class="file-field input-field col s10 offset-s1 m6 l6">
+                <div class="btn file-upload-color">
+                    <span>Upload Spreadsheet</span>
+                        <input type="file" id="file-name">
+                        <i class="material-icons left">cloud_upload</i>
+                        <%= file_field_tag "file" %>
+                </div>
+                    <div class="file-path-wrapper">
+                        <input name="file-name" class="file-path" type="text" id="file-name">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row">
+                <div class="col s12 learner-button">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

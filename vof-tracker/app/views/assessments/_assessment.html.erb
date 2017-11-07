@@ -1,0 +1,28 @@
+<div id="framework">
+  <div class="col l4 m6 s12">
+    <div class='card framework'>
+      <div class='row assessment-section'>
+        <span id='assessment_name' class='assessment_name'> </span>
+        <a class='tooltipped waves-effect waves-light modal-action modal-trigger' href='#modal1' data-position='top' data-delay='50' data-tooltip='Score Guide'>
+        <em class='material-icons info-icon'> info_outline </em> </a>
+      </div>
+      <div class='row grade-section'>
+        <div class="radio-wrapper">
+          <% (0..3).each do |option| %>
+            <div class='input-wrapper'>
+              <input type='radio' name='score[score]' id='score_score_<%=option%>' value='<%=option%>' >
+              <label id='label' for='score_score_<%=option%>' class='grade-button <%= (user_is_lfa?(@bootcamper[:camper_id]) || admin?) == false ? "" : "enabled" %> center-align'><%=option%></label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class='row comment-area'>
+        <div class='input-field'>
+          <textarea <%= (user_is_lfa?(@bootcamper[:camper_id]) || admin?) == false ? "disabled" : "" %> id='comment-box' class="comment-box" name='score[comments]' placeholder="Comment"></textarea>
+        </div>
+        <input name='score[phase_id]' type='hidden' value='' />
+        <input name='score[assessment_id]' type='hidden' value='' />
+      </div>
+    </div>
+  </div>
+</div>

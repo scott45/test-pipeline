@@ -1,0 +1,45 @@
+<div>
+  <div id="criterion-modal" class="modal">
+    <div id="modal-header">
+      <h4>Add Criterion</h4>
+    </div>
+    <div class="modal-content">
+      <%= form_for(@content[:criterium], remote: true, id: "modal-form") do |f| %>
+        <div class="row">
+          <%-# Fetch the name from the criteria table -%>
+          <div class="input-field col s12 add-margin">
+            <%= f.text_field :name, class:"validate", id:"criterion" %>
+            <%= f.label :name, id:"criterion-label" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 select-frameworks">
+            <%= select_tag(
+              :frameworks,
+              options_for_select(@content[:frameworks].pluck(:name, :id).unshift(['Choose framework(s)', ''])),
+              multiple: true)
+            %>
+            <label id="frameworks-label">Framework</label>
+          </div>
+        </div>
+        <div class="row">
+        <%-# Fetch the description from the criteria table -%>
+          <div class="input-field col s12">
+              <%= f.text_field :description, class:"validate", id:"description" %>
+              <%= f.label :description, id:"description-label" %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col s6">
+              <%= f.submit "Save", class: "waves-effect waves-green btn btn-save", id: "save-criterion" %>
+            </div>
+            <div class="col s6">
+              <a href="#!" class="modal-action modal-close waves-effect waves-green waves-light btn-cancel btn-flat">Cancel</a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

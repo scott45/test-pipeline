@@ -1,0 +1,164 @@
+<div id="bootcamp-container">
+<div class="bootcamp-data">
+  <% if campers.empty? %>
+    <h4 id="result-feedback">No Results Found</h4>
+  <% else %>
+    <% campers.each_with_index do |data, index| %>
+      <div class="each-camper campers-data-<%= index %>">
+        <div class="camper-row camper-fdata-<%= index %>">
+            <div id="<%= data["camper_id"] %>"
+                <% if data["decision_one"]=="Advanced" && data["decision_two"] != "Not Applicable" %>
+                    class="status-color <%= set_status_color(data["decision_two"]) %>">
+                <% else %>
+                    class="status-color <%= set_status_color(data["decision_one"]) %>">
+                <% end %>
+            </div>
+            <div class="num-row">
+                <span class="no"><%= index + 1 + @dashboard.offset %></span>
+            </div>
+          <div class="name-column">
+            <span class="name"><a class="name" href="/bootcampers/<%= data["camper_id"] %>/scores">
+            <%= data["first_name"] %> <%= data["last_name"] %>
+          </a></span>
+          </div>
+          <div class="gender-row">
+            <% if data["gender"] == "Male" %>
+              <%= image_tag("/gender-male.png", :style => "width:35px; height: auto;") %>
+            <% end %>
+            <% if data["gender"] == "Female" %>
+                <%= image_tag("/gender-female.png", :style => "width:35px; height: auto;") %>
+            <% end %>
+          </div>
+          <div class="data-row">
+            <p>Overall Avg.</p>
+            <div>
+              <p><span class="data-value"><%= data["overall_average"] %></span></p>
+            </div>
+          </div>
+          <div class="data-row">
+            <p>Values Alignment Avg.</p>
+            <div>
+             <p><span class="data-value"><%= data["value_average"] %></span>
+            </div>
+          </div>
+          <div class="data-row">
+            <p>Output Quality Avg.</p>
+            <div>
+             <p><span class="data-value"><%= data["output_average"] %></span>
+            </div>
+          </div>
+          <div class="data-row">
+            <p>Feedback Avg.</p>
+            <div>
+             <p><span class="data-value"><%= data["feedback_average"] %></span>
+            </div>
+          </div>
+          <div class="data-row progress-details">
+            <p>Progress</p>
+            <div>
+              <% total_assessed =  get_total_assessed(data["camper_id"]) %>
+              <% total_assessments =  get_total_assessments %>
+              <% total_percentage = get_total_percentage(total_assessed, total_assessments) %>
+              <% progress_status = get_progress_status(total_percentage) %>
+
+              <div class="data-value">
+                <%= total_assessed %> of <%= total_assessments %> (<%= total_percentage %>%)
+              </div>
+
+              <div class="progress">
+                <div class="determinate <%= progress_status %>" style="width: <%= total_percentage %>%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="status-row data-row">
+            <p>Decision 1</p>
+            <div class="select-field my-select">
+              <select id="decision1_status_<%= data["camper_id"] %>" <%= admin? == false ? "disabled" : "" %> class="camper_status select_status" data-camper-id="<%= data["camper_id"] %>">
+            <% @dashboard.statuses("decision1").each do |value| %>
+              <option <% if value == data["decision_one"] %> selected <% end %> > <%= value %> </option>
+            <% end %>
+          </select>
+            </div>
+          </div>
+          <div class="status-row data-row">
+            <p>Decision 2</p>
+            <span id="decision2_<%= data["camper_id"] %>" class="week2-camper-status"> </span>
+            <div class="select-field my-select">
+              <select id="decision2_status_<%= data["camper_id"] %>" <%= admin? == false ? "disabled" : "" %> class="camper_status" data-camper-id="<%= data["camper_id"] %>">
+              <% @dashboard.statuses("decision2").each do |value| %>
+                  <option <% if value == data["decision_two"] %> selected <% end %> > <%= value %> </option>
+              <% end %>
+            </select>
+            </div>
+          </div>
+        </div>
+        <div class="camper-row camper-sdata-<%= index %>">
+          <div class="row camper-details">
+            <div class="col s12">
+              <ul class="tabs cycle-decisions">
+                <li class="tab content"><a class="active-details" href="#cycle-details_<%= data["camper_id"] %>">Cycle details</a></li>
+                <li class="tab content"><a id="reasons_<%= data["camper_id"] %>" class="active-details reason-details" href="#decision-details_<%= data["camper_id"] %>">Decision Details</a></li>
+              </ul>
+              <div id="decision-details_<%= data["camper_id"] %>" class="decision">
+                <%= render partial: 'decision', locals: { data: data } %>
+              </div>
+              <div id="cycle-details_<%= data["camper_id"] %>" class="cycle-details">
+                <div class="data-hdr">
+                  <p>Email</p>
+                  <p class="sub-datahdr">
+                    <%= data["email"] %>
+                  </p>
+                </div>
+                <div class="location-row">
+                  <p>Location</p>
+                  <p class="sub-datahdr">
+                      <%= data["city"] %>
+                  </p>
+                </div>
+                <div class="cycle-row">
+                  <p>Cycle</p>
+                  <p class="sub-datahdr">
+                    <%= data["cycle"] %>
+                  </p>
+                </div>
+                <div class="status-row data-row lfa-row">
+                  <p>Week 1 LFA</p>
+                  <div class="select-field my-select">
+                    <select id="week1_lfa_<%= data["camper_id"] %>" <%= admin? == false ? "disabled" : "" %> class="camper_lfa" data-camper-id="<%= data["camper_id"] %>">
+                    <% lfa_week1(data["city"], data["cycle"]).each do |lfa|%>
+                      <option value="<%= lfa[:email] %>" <% if lfa[:email] == data["week_one_lfa"]%> selected <% end %> > <%= lfa[:name] %> </option>
+                      <% end %>
+                    </select>
+                  </div>
+                </div>
+                <div class="status-row data-row lfa-row">
+                  <p>Week 2 LFA</p>
+                  <div class="select-field my-select">
+                    <span id="week2_lfa_default_<%= data["camper_id"] %>" class="week2-camper-lfa"> </span>
+                    <select id="week2_lfa_<%= data["camper_id"] %>" <%= admin? == false ? "disabled" : "" %> class="camper_lfa" data-camper-id="<%= data["camper_id"] %>">
+                    <% lfa_week2(data["city"], data["cycle"]).each do |lfa|%>
+                      <option value="<%= lfa[:email] %>" <% if lfa[:email] == data["week_two_lfa"]%> selected <% end %> > <%= lfa[:name] %> </option>
+                      <% end %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+</div>
+<div class="u-topSpacing">
+<div id="pagination-div" class="row">
+  <div id="show-entries-div" class="col left">
+    <%= pagination_metadata(campers.current_page, params[:size] || 15, campers.count, campers.total_count) %>
+  </div>
+  <div class="col  right pages" id="paginate">
+    <%= paginate campers %>
+  </div>
+</div>
+<%= render('decision_comment') %>
+</div>

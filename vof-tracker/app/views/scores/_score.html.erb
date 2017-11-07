@@ -1,0 +1,57 @@
+<%= form_tag bootcampers_save_scores_path, method:'post', id: "score-form", remote: true do %>
+  <div class="col score-camper-container">
+    <div class="col s12 phase">
+      <% if !(user_is_lfa?(@bootcamper[:camper_id]) || admin?) %>
+        <div class="viewer-notice"> You are not authorised to update the scores for this learner </div>
+      <% end %>
+      <div class="col row phase-body">
+        <div class="col s12 criteria" id="criteria">
+          <div class="col s12 header" id="framework_name">
+          </div>
+          <div class="row criteria-body" id="framework_body">
+            <%= render "assessments/assessment" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+  </div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="score-guide">
+      <h5 class="score-guide-header">Score Guide</h5>
+    </div>
+    <div class="modal-content">
+      <div class="modal-context"><strong>Description:</strong>
+        <span id="assessmentDescription"></span>
+      </div>
+      <div class="modal-context"><strong>Context:</strong>
+        <span id="assessmentContext"></span>
+      </div>
+      <table class="responsive-table">
+        <thead class="table-head">
+          <tr class="table-title">
+            <td>Score</td>
+            <td class="tbody-content">Score Description</td>
+          </tr>
+        </thead>
+        <tbody id="scoringContext">
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  </div>
+  <% if user_is_lfa?(@bootcamper[:camper_id]) || admin? %>
+    <% if @form_assessment %>
+      <div class="submit-button col s12 left-align">
+        <button id="submit-scores" class="btn waves-effect waves-light" type="button" name="action">Submit Score(s)
+        <i class="material-icons right">send</i>
+        </button>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

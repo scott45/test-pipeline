@@ -1,0 +1,14 @@
+<div class="row">
+  <%= form_tag('/', id: "decision-#{decision}-comments-modal", remote: true, method: :put) do -%>
+    <div class="row">
+      <div class="input-field col s12">
+        <%= text_area_tag "decision_#{decision}_comment", nil, class: 'materialize-textarea validate active' %>
+        <%= label_tag "decision_#{decision}_comment", decision == "one" ? "Decision 1" : "Decision 2", id: "decision_#{decision}_label" %>
+      </div>
+      <div class="modal-footer">
+        <%= submit_tag "Save", class: 'waves-effect waves-green btn btn-save right' %>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green waves-light btn-flat">Cancel</a>
+      </div>
+    </div>
+  <% end %>
+</div>

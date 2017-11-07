@@ -1,0 +1,10 @@
+var message = "<%= flash[:notice] == 'update-success' ? 'Criterion Updated Successfully' : flash[:error] %>";
+var color = "<%= flash[:notice] == 'update-success'  ? 'black' : 'red' %>";
+Materialize.toast(message, 5000, color);
+<% if flash[:notice] %>
+  $('#criterion-modal').modal('close');
+  $('#criterion-modal').find('label').removeClass('active');
+  $("#criterion-row-<%= @criterium.id %> .name span").text("<%= @criterium.name %>")
+  $("#criterion-row-<%= @criterium.id %> .output ul").html("<% @criterium.frameworks.each do |f| %><li><%= f.name %></li><% end %>")
+  $("#criterion-row-<%= @criterium.id %> .description span").text("<%= @criterium.description %>")
+<% end %>

@@ -1,0 +1,32 @@
+<div class="login-container">
+    <div class="header">
+        <span class="logo"></span>
+        <h5 class="text">Andela</h5>
+    </div>
+    <div class="content">
+      <div class="flash-message">
+        <% if flash[:notice] == 'unauthorized'%>
+          <%= content_tag :span, 'Unauthorized ¯¯\_(ツ)_/¯¯', class: "notice", id: "puffly" %>
+        <% end %>
+
+        <% if flash[:notice] == 'unauthenticated'%>
+          <%= content_tag :span, 'Login to view dashboard', class: "notice", id: "puffly" %>
+        <% end %>
+      </div>
+      <div class="welcome">
+        <h1>
+            VOF Tracker
+        </h1>
+        <a href= <%= @auth_url %>>
+            <span class="login-button">
+              <span class="login-icon">
+                  <span class="image"></span>
+              </span>
+              <span class="login-text">
+                  SIGN IN TO GET STARTED
+              </span>
+            </span>
+        </a>
+      </div>
+  </div>
+</div>

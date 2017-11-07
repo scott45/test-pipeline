@@ -1,0 +1,8 @@
+$('#output-modal').modal('close');
+$('#new_assessment')[0].reset();
+var message = "<%= flash[:notice] == 'assessment-success' ? 'Assessment Successfully created' : flash[:error] %>";
+var color = "<%= flash[:notice] == 'assessment-success' ? 'black' : 'red' %>";
+Materialize.toast(message, 5000, color);
+<% if flash[:notice] %>
+  $('#outputs tbody.assessments-body').prepend('<%= j render("assessments/assessment_body", assessment: @assessment) %>');
+<% end %>

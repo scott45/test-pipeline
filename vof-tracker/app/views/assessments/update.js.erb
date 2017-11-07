@@ -1,0 +1,9 @@
+$('.modal').modal()
+$('#output-modal').modal('close')
+$('.new_assessment').attr("action", "/assessments")
+$('.new_assessment').attr("method", "post")
+$('#new_assessment')[0].reset()
+var message = "<%= flash[:notice] == 'update-success' ? 'Assessment Updated Successfully' : flash[:error] %>"
+var color = "<%= flash[:notice] == 'update-success'  ? 'black' : 'red' %>";
+Materialize.toast(message, 5000, color);
+$("tr#<%= @unique_assessment.id %>").replaceWith("<%= escape_javascript (render 'assessment_body', assessment: @unique_assessment) %>");

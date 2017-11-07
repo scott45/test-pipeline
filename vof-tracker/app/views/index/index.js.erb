@@ -1,0 +1,9 @@
+$(".all_data").html("<%= escape_javascript (render 'bootcamper', campers: @campers) %>");
+vof.dashboardControl();
+vof.hideLimitSpinner();
+$('ul.tabs').tabs();
+$('.modal').modal();
+$('select').material_select();
+vof.addComment();
+$('.sort-button').dropdown();
+vof.selectDecisionTab();

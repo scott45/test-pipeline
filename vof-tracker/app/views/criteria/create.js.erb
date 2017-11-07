@@ -1,0 +1,10 @@
+var message = "<%= flash[:notice] == 'criterion-success' ? 'Criterion Successfully created' : flash[:error] %>";
+var color = "<%= flash[:notice] == 'criterion-success' ? 'black' : 'red' %>"
+Materialize.toast(message, 5000, color);
+<% if flash[:notice] %>
+  $('#new_criterium')[0].reset();
+  $('#criterion-modal').modal('close');
+  $('#description-label').removeClass("active");
+  $('#criterion-label').removeClass("active");
+  $('#criteria-table tbody').prepend('<%= j render @criterium %>');
+<% end %>

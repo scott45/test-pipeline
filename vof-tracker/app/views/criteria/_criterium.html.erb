@@ -1,0 +1,17 @@
+<tr id="criterion-row-<%= criterium.id %>" class="criteria-row-wrapper">
+  <td class="criteria-criterion name"><span><%= criterium.name %></span></td>
+  <td class="criteria-framework"><span class="output"><ul class="browser-default"><% criterium.frameworks.each do |f| %><li><%= f.name %></li><% end %></ul></span></td>
+  <td class="criteria-description description">
+    <span>
+      <%= criterium.description.nil? || criterium.description == "" ? 'N/A' : criterium.description %>
+   </span>
+  </td>
+  <% if admin? %>
+  <td class="table-action">
+    <span>
+      <i class="material-icons icon-edit edit-criterium" id="criterium_<%= criterium[:id] %>">edit</i>
+      <i class="material-icons icon-delete">delete</i>
+    </span>
+  </td>
+  <% end %>
+</tr>

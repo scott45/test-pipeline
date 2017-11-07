@@ -1,0 +1,58 @@
+<div class="col s12 profile-container">
+  <div class="col s12">
+    <h5><%= @bootcamper[:city] %>, <%= @bootcamper[:country] %> Cycle <%= @bootcamper[:cycle] %> </h5>
+    <p>
+      Name:  <span class="camper_details"> <%=  @bootcamper[:first_name] %> <%= @bootcamper[:last_name] %> </span>
+    </p>
+    <p>
+      Email:  <span class="camper_details"> <%= @bootcamper[:email] %> </span>
+    </p>
+    <p>
+      Decision 1: <span class="camper_details"> <%= @bootcamper[:decision_one] %> </span>
+      <span class="status-color-icon <%= set_status_color(@bootcamper[:decision_one]) %>"></span>
+    </p>
+    <p>
+      Decision 2: <span class="camper_details"> <%= @bootcamper[:decision_two] %> </span>
+      <span class="status-color-icon <%= set_status_color(@bootcamper[:decision_two]) %>"></span>
+    </p>
+    <p>
+      Progress:
+      <span class="camper_details">
+          <span id="total-assessed">0</span> of <span id="total-assessments">0</span> assessed (<span id="assessment-percentage">0</span>%)
+      </span>
+    </p>
+  </div>
+
+  <div class="row score-section">
+    <span>
+      <div class="filter">
+        <div class="input-field">
+          <select class="scores-dropdown" id="select_phase"></select>
+          <label class="select_label">Select Phase</label>
+        </div>
+      </div>
+    </span>
+
+    <span>
+      <div class="filter">
+        <div class="input-field">
+          <select class="scores-dropdown" id="select_framework"></select>
+          <label class="select_label">Select Framework</label>
+        </div>
+      </div>
+    </span>
+
+    <span>
+      <div class="filter">
+        <div class="input-field">
+          <select class="scores-dropdown" id="select_criteria"></select>
+          <label class="select_label">Select Criteria</label>
+        </div>
+      </div>
+    </span>
+
+  </div>
+  <div id="dynamic_criteria">
+    <%= render partial: "score" %>
+  </div>
+</div>

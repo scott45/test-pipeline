@@ -1,0 +1,50 @@
+<nav class="user-level-nav">
+  <div class="nav-wrapper hide-on-med-and-down">
+    <ul class="left-align">
+      <% if authorized_learner? %>
+        <li class="menu-item" id="my_profile">
+          <%= link_to "My Profile", learner_path, :target => "_self" %>
+        </li>
+        <li class="menu-item" id="learning_outcomes">
+          <%= link_to "Learning Outcomes", learning_outcomes_path, :target => "_self" %>
+        </li>
+        <li class="menu-item" id="faqs">
+          <%= link_to "FAQs", faqs_path, :target => "_self" %>
+        </li>
+      <% else %>
+        <li class="menu-item" id="home">
+          <%= link_to "Home", index_path, :target => "_self" %>
+        </li>
+         <% if admin? %>
+        <li class="menu-item" id="add_campers">
+          <%= link_to "Add Learners", bootcampers_path, :target => "_self" %>
+        </li>
+         <% end %>
+        <li class="menu-item" id="content_management">
+          <%= link_to "Content Management", content_management_path, :target => "_self" %>
+        </li>
+        <li class="menu-item" id="support">
+          <%= link_to "Support", support_path, :target => "_self" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <% if admin? %>
+    <div class="admin-menu-button hide-on-med-and-down">
+      <div class="icon-wrapper">
+        <span class="icon menu-close"><i class="material-icons">close</i></span>
+        <span class="icon menu-open"><i class="material-icons">settings</i></span>
+      </div>
+      <h5 class="admin-actions">Actions </h5>
+      <ul class="admin-list">
+        <li class="admin-item">
+          <a href="/?format=csv&city=<%= params[:city] %>&cycle=<%= params[:cycle] %>&decision_one=<%= params[:decision_one] %>&decision_two=<%= params[:decision_two] %>&week_one_lfa=<%= params[:week_one_lfa] %>&week_two_lfa=<%= params[:week_two_lfa]%>">
+            Download CSV
+          </a>
+        </li>
+        <li class="admin-item" id="open-criterion-modal"><a href="#">Add Criterion</a></li>
+        <li class="admin-item" id="open-output-modal"><a href="#">Add Output</a></li>
+      </ul>
+    </div>
+  <% end %>
+</nav>

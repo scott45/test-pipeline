@@ -1,0 +1,54 @@
+{
+  "Learning Ability": {
+    "Feedback": [
+      "Openness To Feedback",
+      "Progress Attempts"
+    ]
+  },
+  "Self-awareness": {
+    "Feedback": []
+  },
+  "Team Skills": {
+    "Output Quality": [
+      "Growth Mindset",
+      "Seeks Feedback",
+      "Writing Professionally",
+      "Relationship Building",
+      "Asks Questions",
+      "Adaptability",
+      "Motivation and Commitment"
+    ]
+  },
+  "Technical Skills": {
+    "Output Quality": [
+      "Programming Logic",
+      "Version Control",
+      "GIT",
+      "Github Repository",
+      "Object Oriented Programming",
+      "HTTP & Web Services",
+      "Front-End Development",
+      "Agile Methodology",
+      "Databases",
+      "Test-Driven Development",
+      "Code Syntax Norms",
+      "Project Management",
+      "Code Understanding"
+    ]
+  },
+  "EPIC": {
+    "Values Alignment": [
+      "Excellence",
+      "Passion",
+      "Integrity",
+      "Collaboration",
+      "Commitment"
+    ]
+  },
+  "Technology Leader": {
+    "Values Alignment": []
+  },
+  "Human Empowerment": {
+    "Values Alignment": []
+  }
+}

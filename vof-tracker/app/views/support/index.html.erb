@@ -1,0 +1,71 @@
+<%= render("layouts/navbar")%>
+<div class="row">
+  <div class="container support-page">
+    <div class="row">
+      <div class="col s12 m12 l8">
+        <div class="card faq-card">
+          <div class="card-content white-text">
+            <div class="card-title">
+              <h4>FAQs</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m12 l4">
+        <% if admin? %>
+          <div class="col s12">
+            <div class="card resource-card">
+              <div class="card-content">
+                <div class="card-title">
+                  <h5>Downloadable Resources</h5>
+                </div>
+                <ul class="resource-details">
+                  <li class="resource-link">
+                    <a href="/?format=csv&city=<%= params[:city] %>&cycle=<%= params[:cycle] %>&decision_one=<%= params[:decision_one] %>&decision_two=<%= params[:decision_two] %>&week_one_lfa=<%= params[:week_one_lfa] %>&week_two_lfa=<%= params[:week_two_lfa]%>">
+                      Learner Data
+                    </a>
+                  </li>
+                  <li class="resource-link">
+                    <a href="https://raw.githubusercontent.com/andela/vof-tracker/develop/spec/fixtures/example.xlsx?token=AZDkP1ng_rIfvCjiGUG7FMbtzVvtWJGxks5Z0365wA%3D%3D" download>Learner Data Template</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <div class="col s12">
+          <div class="card resource-card">
+            <div class="card-content">
+              <div class="card-title">
+                <h5>Important Resources</h5>
+              </div>
+              <ul class="resource-details">
+                <li class="resource-link">
+                  <a href="https://docs.google.com/document/d/1xFAGKOFAVra9nVgtkW0TNYIiPliZd3sOsXwxvUQjbAY/edit#" target="_blank">VOF Vision / Mission</a>
+                </li>
+                <li class="resource-link">
+                  <a href="https://drive.google.com/file/d/0B5Vrqhb-7cCncW1EQ2c1Zl9sT3c/view" target="_blank">Bootcamp Curriculum</a>
+                </li>
+                <li class="resource-link">
+                  <a href="https://github.com/andela/learning/tree/master/Bootcamp" target="_blank">State of Bootcamp</a>
+                </li>
+                <li class="resource-link">
+                  <a href="https://github.com/andela/learningmap/tree/master/Bootcamp/Curriculum" target="_blank">Andela OKBBs</a>
+                </li>
+                <li class="resource-link">
+                  <a href="https://docs.google.com/spreadsheets/d/1dOX1MibJDVxmFVuAhX2buvYdDNrUgrkaoC7QIhvK3V0/edit#gid=0" target="_blank">VOF Framework & Levels</a>
+                </li>
+                <li class="resource-link">
+                  <a href="https://docs.google.com/spreadsheets/d/1u5z0uf0KLJ1YnVCFwWcIcEjY2rfquLGCEcr0mSZ62es/edit#gid=1425508101" target="_blank">VOF Scoring Algorithms</a>
+                </li>
+                <li class="resource-link">
+                  <a href="https://docs.google.com/document/d/1usrRiM2Dix_-ZHHGL45ygGaTyPca92a3PAIizdql0ko/edit#" target="_blank">Sample Checkpoint Template</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

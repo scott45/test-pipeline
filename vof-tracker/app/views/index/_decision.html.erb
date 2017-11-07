@@ -1,0 +1,51 @@
+<% [1, 2].each do |stage| %>
+ <% word_equivalent =  stage == 1 ? "one": "two" %>
+  <div id="camper-decision" class="decision-container col s3 data-row">
+    <p class="align-left">Decision <%= stage %> Reason</p>
+    <div class="select-reason my-select decision-reason">
+      <span id="reason<%= stage %>_default_<%= data["camper_id"] %>" ></span>
+      <% if admin? %>
+        <select multiple id="reason<%= stage %>_<%= data["camper_id"] %>" class="camper-decision-reason" >
+        </select>
+      <% else %>
+        <a class="sort-button" href="#!" data-activates="reason_<%= word_equivalent %>_<%= data["camper_id"] %>">
+          <label class="decision-reasons-<%= stage.to_s + data["camper_id"] %> decision-label">
+          </label>
+          <p id="reason_<%= word_equivalent %>_<%= data["camper_id"] %>" class="decision-reasons-dropdown-<%= stage.to_s + data["camper_id"] %> decision-<%= word_equivalent %>-dropdown">
+          </p>
+        </a>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="decision-container col s3 data-row">
+      <p class="align-left">Decision <%= stage %> Comment</p>
+      <div class="sub-datahdr decision-container">
+        <a class="sort-button" href="#!" data-activates="decision_<%= word_equivalent %>_<%= data["camper_id"] %>">
+          <label id="decision_<%= word_equivalent %>_label_<%= data["camper_id"] %>" class="decision-label">
+            <% if data["decision_#{word_equivalent}_comment"] && data["decision_#{word_equivalent}_comment"].length > 0 %>
+              <%= data["decision_#{word_equivalent}_comment"].truncate(20) %>
+            <% else %>
+              <%= "No comment" %>
+            <% end %>
+          </label>
+          <p id="decision_<%= word_equivalent %>_<%= data["camper_id"] %>" class="decision-<%= word_equivalent %>-dropdown
+            <% if data["decision_#{word_equivalent}_comment"] && data["decision_#{word_equivalent}_comment"].length <= 19 || data["decision_#{word_equivalent}_comment"].nil? %>
+              align-center
+            <% end %>">
+            <% if data["decision_#{word_equivalent}_comment"] && data["decision_#{word_equivalent}_comment"].length > 0 %>
+              <%= data["decision_#{word_equivalent}_comment"] %>
+            <% else %>
+              <%= "No comment" %>
+            <% end %>
+          </p>
+        </a>
+    
+        <% if user_is_lfa?(data["camper_id"]) || admin? %>
+          <a class="add-comment edit-decision-<%= word_equivalent %>" id="<%= data["camper_id"] %>" href="#comment-modal">
+            <i class="material-icons icon-edit edit-icon">edit</i>
+          </a>
+        <% end %>
+      </div>
+    </div>
+<% end %>

@@ -1,0 +1,29 @@
+<div id="criteria-filter" >
+  <div class="filter-criteria">
+    <div class="input-field">
+      <select multiple="multiple" id="cms_framework_id" class="cms_framework_class">
+        <option value="vof">All</option>
+      </select>
+      <label class="select-label">Filter by Framework</label>
+    </div>
+  </div>
+</div>
+
+<div class="row output" id="criteria-table">
+  <div class="cms-criteria-table">
+    <table class="bordered">
+      <thead class="criteria">
+        <tr class="criteria-wrapper table-header">
+          <th class="criteria-criterion curricula-header">Criterion<i id="criteria-filter-icon" class="fa fa-sort-amount-desc icon-sort" aria-hidden="true"></i></th>
+          <th class="criteria-framework curricula-header">Framework<i id="criteria-filter-icon" class="fa fa-sort-amount-desc icon-sort" aria-hidden="true"></i></th>
+          <th class="criteria-description curricula-header">Description</th>
+          <% if admin? %><th class="criteria-output table-action">Action</th><% end %>
+        </tr>
+      </thead>
+
+      <tbody id="criteria-body" class="criteria-table-body">
+      <%= render @content[:criteria].reverse %>
+      </tbody>
+    </table>
+  </div>
+</div>

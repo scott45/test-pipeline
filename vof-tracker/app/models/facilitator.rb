@@ -1,0 +1,2 @@
+class Facilitator < ApplicationRecord
+end

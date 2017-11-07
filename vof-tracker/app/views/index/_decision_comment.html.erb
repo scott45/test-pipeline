@@ -1,0 +1,27 @@
+<div>
+  <div id="comment-modal" class="modal">
+    <div id="modal-header">
+      <h4>Decision Comments</h4>
+    </div>
+
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s6"><a id="decison-one" href="#decision-one-comment">Decision 1</a></li>
+        <li class="tab col s6"><a href="#decision-two-comment">Decision 2</a></li>
+      </ul>
+    </div>
+
+    <div class="modal-content">
+      <div class="row">
+        <div class="col s12 comment" id="decision-one-comment">
+          <%= render "decision_comment_form", decision: "one" %>
+        </div>
+
+        <div class="col s12 comment" id="decision-two-comment">
+          <%= render "decision_comment_form", decision: "two" %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

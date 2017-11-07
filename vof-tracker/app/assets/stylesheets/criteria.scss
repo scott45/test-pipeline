@@ -1,0 +1,80 @@
+// Place all the styles related to the criteria controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.criterium-div {
+  margin-top: 10px;
+}
+
+.criterium-wrapper{
+  height: auto !important;
+}
+
+.curricula-header {
+  border-radius: 0px;
+}
+
+@media screen and (max-width: 480px) {
+  .select-wrapper input.select-dropdown {
+    width: 100%;
+  }
+}
+
+.criteria-wrapper {
+  word-wrap: break-word;
+  .criteria-output,
+  .criteria-context,
+  .criteria-name,
+  .criteria-framework,
+  .criteria-criterion {
+    min-width: 280px;
+  }
+  .criteria-description,
+  .criteria-metric {
+    min-width: 420px;
+  }
+  .criteria-action {
+    min-width: 80px;
+  }
+}
+.criteria-row-wrapper{
+  word-wrap: break-word;
+  .criteria-output,
+  .criteria-context,
+  .criteria-name,
+  .criteria-framework,
+  .criteria-criterion {
+    min-width: 280px;
+  }
+  .criteria-description {
+    min-width: 420px;
+    max-width: 420px;
+    padding-right: 15px;
+  }
+  .criteria-action {
+    min-width: 80px;
+  }
+}
+.cms-criteria-table {
+  overflow-x: scroll;
+  margin-right: 10px;
+  table {
+   min-width: 1200px;
+  td, th {
+    vertical-align: top;
+    border-radius: 0 !important;
+    font-weight: 400;
+  }
+ }
+}
+
+#criteria-table {
+  margin-left: auto;
+}
+
+#criteria-filter-icon {
+  margin-left: 5px;
+}
+
+.output-row {
+  border: none !important;
+}

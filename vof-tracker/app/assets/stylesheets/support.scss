@@ -1,0 +1,82 @@
+.support-page {
+  margin-top: 20px;
+
+  .card {
+    cursor: default;
+
+    .card-title {
+      color: #000000;
+      font-weight: 300;
+      margin: 0.75em 0;
+    }
+  }
+
+  .faq-card {
+    min-height: 650px;
+    
+    @media screen and (max-width: 520px) {
+      .faq-card {
+        margin: 0px;
+        width: 90%;
+      }
+    }
+  }
+
+  .resource-card {
+    min-height: 250px;
+
+    h5 {
+      font-size: 0.83em !important;
+    }
+
+    ul {
+      list-style-type: initial;
+      padding-left: 30px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+
+    li {
+      list-style-type: initial;
+    }
+
+    .resource-details {
+      margin-top: 20px;
+      margin-bottom: 35px;
+    }
+
+    .resource-link {
+      padding: 3px;
+      width: 100%;
+      margin: 3px 0;
+    }
+
+    a:link {
+      color: #039be5;
+      text-decoration: none;
+    }
+    
+    a:hover {
+        color: #DD1111;
+        text-decoration: none;
+    }
+    
+    a:active {
+        color: #039be5;
+        text-decoration: none;
+    }
+
+    @media screen and (min-width: 520px) and (max-width: 985px) {
+      .resource-card {
+        margin: 0px auto;
+        width: 70%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 720px) {
+    .support-page {
+      margin-top: 10px;
+    }
+  }
+}

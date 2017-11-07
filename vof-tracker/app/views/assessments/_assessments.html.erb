@@ -1,0 +1,42 @@
+<div id="criteria-filter" >
+  <div class="filter-criteria">
+    <div class="input-field">
+      <select multiple id="cms_output_framework" class="cms_output_framework" >
+      <option>All </option>
+      </select>
+      <label class="select-label">Filter by Framework</label>
+    </div>
+  </div>
+  <div class="filter-criteria" >
+    <div class="input-field">
+        <select multiple id="cms_output_criteria" class="cms_output_criteria" >
+           <option disabled>All </option>
+        </select>
+      <label class="select-label">Filter by Criteria</label>
+    </div>
+  </div>
+</div>
+<div class="output">
+  <div class="output-table">
+    <table class="bordered">
+      <thead class="assessment">
+        <tr class="assessment-wrapper table-header">
+          <th class="assessment-output">Output <i class="fa fa-sort-amount-desc icon-sort" aria-hidden="true"></i></th>
+          <th class="assessment-description">Description</th>
+          <th class="assessment-context">Context</th>
+          <th class="assessment-metric">Metric</th>
+          <th class="assessment-framework">Framework</th>
+          <th class="assessment-criterion">Criteria</th>
+          <% if admin? %>
+            <th class="table-action">Action</th>
+          <% end %>
+        </tr>
+      </thead>
+
+      <tbody id="assessment-body" class="assessments-body">
+        <%= render partial: 'assessments/assessment_body', collection: @content[:assessments].reverse, as: :assessment %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
