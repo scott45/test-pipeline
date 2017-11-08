@@ -1,4 +1,3 @@
-vof-pipeline
 defaults: &defaults
   docker:
     - image: sedzsoft/vof-ci-image
