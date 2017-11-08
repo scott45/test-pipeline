@@ -1,6 +1,6 @@
 defaults: &defaults
   docker:
-    - image: sedzsoft/vof-ci-image
+    - image: circleci/ruby:2.4.1
       environment:
         - VOF_PATH=~/vof
         - PG_HOST=localhost
@@ -37,7 +37,6 @@ jobs:
           name: Install bundler
           command: |
             sudo gem install bundler
-            /Users/scotty/.rubies/ruby-2.4.1/bin/ruby /usr/bin/ruby
             bundle install
       - run: 
           name: Set up DB
