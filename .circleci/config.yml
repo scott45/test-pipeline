@@ -1,35 +1,32 @@
-# vof-pipeline
-# defaults: &defaults
-#   docker:
-#     - image: sedzsoft/vof-ci-image
-#       environment:
-#         - VOF_PATH=~/vof
-#         - PG_HOST=localhost
-#         - PG_USER=ubuntu
-#         - RAILS_ENV=test
-#         - RACK_ENV=test
-#     - image: postgres:9.5
-#       environment:
-#         - POSTGRES_USER=ubuntu
-#         - POSTGRES_DB=db_name
+vof-pipeline
+defaults: &defaults
+  docker:
+    - image: sedzsoft/vof-ci-image
+      environment:
+        - VOF_PATH=~/vof
+        - PG_HOST=localhost
+        - PG_USER=ubuntu
+        - RAILS_ENV=test
+        - RACK_ENV=test
+    - image: postgres:9.5
+      environment:
+        - POSTGRES_USER=ubuntu
+        - POSTGRES_DB=db_name
 
-  # working_directory: ~/vof
+  working_directory: ~/vof
 
 version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.4
-
+      - image: sedzsoft/vof_ci_image:latest
     working_directory: ~/vof
-      
     steps:
       - checkout
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
           - v1-dependencies-
-
       - save_cache:
           paths:
             - ./vendor/bundle
@@ -46,17 +43,15 @@ jobs:
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
         environment:
-          DATABASE_URL: "postgres://ubuntu@localhost:5432/db_name"
-          
+          DATABASE_URL: "postgres://ubuntu@localhost:5432/db_name"    
   test:
+    <<: *defaults
     steps:
-      # <<: *defaults
       - checkout
       - restore_cache:
         keys:
         - v1-dependecies-{{ checksum "Gemfile.lock" }}
         - v1-dependecies-
-
       - run:
           name: run tests
           steps:
@@ -65,8 +60,7 @@ jobs:
           command: |
             set +e
             mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-            
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"          
             bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
