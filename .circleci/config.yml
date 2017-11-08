@@ -37,10 +37,7 @@ jobs:
           name: Install bundler
           command: |
             sudo gem install bundler
-            $HOME/.rubies/ruby-2.4.1/bin/bundle
-      - run:
-          name: Install Ruby Dependencies
-          command: bundle install
+            bundle install
       - run: 
           name: Set up DB
           command: |
