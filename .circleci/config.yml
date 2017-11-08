@@ -48,7 +48,7 @@ jobs:
           DATABASE_URL: "postgres://ubuntu@localhost:5432/db_name"
   test:
     steps:
-    <<: *defaults
+      <<: *defaults
       - checkout
       - restore_cache:
         keys:
