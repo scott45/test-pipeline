@@ -18,7 +18,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: sedzsoft/vof_ci_image:latest
+      - image: sedzsoft/vof-ci-image:latest
     working_directory: ~/vof
     steps:
       - checkout
