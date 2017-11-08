@@ -19,7 +19,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: sedzsoft/vof-ci-image
+      - image: circleci/ruby:2.4
 
     working_directory: ~/vof
       
