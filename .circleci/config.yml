@@ -1,6 +1,6 @@
 defaults: &defaults
   docker:
-    - image: circleci/python:2.7.13
+    - image: sedzsoft/vof-ci-image
       environment:
         - VOF_PATH=~/vof
         - PG_HOST=localhost
@@ -36,8 +36,8 @@ jobs:
       - run:
           name: Install bundler
           command: |
-            sudo gem install bundler
-            bundle install
+            sudo gem install bundler --no-ri --no-rdoc
+            bundle install --no-ri --no-rdoc
       - run: 
           name: Set up DB
           command: |
