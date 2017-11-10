@@ -35,7 +35,7 @@ jobs:
           command: apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev rake sudo
       - run:
           name: Install JS runtime
-          command: sudo apt-get install nodejs
+          command: sudo apt-get install -y nodejs
       - run:
           name: Install bundler
           command: |
