@@ -52,7 +52,7 @@ jobs:
       - image: ruby:2.4.1
         environment:
           - VOF_PATH: ~/vof
-          - PG_HOST: localhost
+          - PG_HOST: 5432
           - PGUSER: vof-tracker
           - RAILS_ENV: test
           - RACK_ENV: test
