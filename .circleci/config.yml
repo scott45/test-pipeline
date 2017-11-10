@@ -101,11 +101,7 @@ jobs:
           name: run tests
           command: |
             mkdir /tmp/test-results
-            bundle exec rake spec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            bundle exec rake spec
 
       - store_test_results:
           path: /tmp/test-results
