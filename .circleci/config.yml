@@ -47,8 +47,7 @@ jobs:
           name: Set up DB
           command: |
             sudo service postgresql start
-            sudo su - postgres
-            exit
+            sudo -u postgres
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
             sudo service postgresql restart
