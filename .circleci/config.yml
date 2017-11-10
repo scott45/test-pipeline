@@ -62,7 +62,7 @@ jobs:
           name: start postgres server
           command: sudo service postgresql start
                   
- test:
+  test:
     docker:
       - image: ruby:2.4.1
         environment:
