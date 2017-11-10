@@ -7,11 +7,13 @@ defaults: &defaults
         - PG_USER=postgres
         - RAILS_ENV=test
         - RACK_ENV=test
+        - DATABASE_URL="postgres://postgres@localhost:5432/dbname"
     - image: postgres:9.5
       environment:
         - POSTGRES_USER=postgres
         - POSTGRES_DB=dbname
- 
+        - POSTGRES_PASSWORD=""
+
   working_directory: ~/vof
 
 version: 2
@@ -48,8 +50,7 @@ jobs:
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
             sudo service postgresql restart
-          environment:
-            DATABASE_URL: "postgres://postgres@localhost:5432/dbname"    
+            
   test:
     <<: *defaults
     steps:
