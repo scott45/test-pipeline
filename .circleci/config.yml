@@ -89,6 +89,7 @@ jobs:
           name: run tests
           command: |
             mkdir /tmp/test-results
+            sudo gem install bundler
             bundle exec rake spec --profile 10 \
                             --format RspecJunitFormatter \
                             --out test_results/rspec.xml \
