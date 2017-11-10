@@ -91,7 +91,7 @@ jobs:
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
           name: Install System Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential rake sudo
+          command: apt-get update -qq && apt-get install -y build-essential nodejs rake sudo
       - run:
           name: Install bundler
           command: |
