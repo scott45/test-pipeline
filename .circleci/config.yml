@@ -1,6 +1,6 @@
 defaults: &defaults
   docker:
-    - image: sedzsoft/vof-ci-image
+    - image: ruby:2.4.1
       environment:
         - VOF_PATH=~/vof
         - PG_HOST=localhost
@@ -18,7 +18,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: sedzsoft/vof-ci-image:latest
+      - image: ruby:2.4.1
     working_directory: ~/vof
     steps:
       - checkout
