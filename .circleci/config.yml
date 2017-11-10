@@ -75,20 +75,15 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum “Gemfile.lock” }}
-          - v1-dependencies-
+          - key: v1-dependencies-{{ checksum “circle.yml” }}
       - save_cache:
           paths:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
+          key: v1-dependencies-{{ checksum “circle.yml” }}
       - run:
           name: Install System Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential nodejs sed sudo dpkg
-      - dependencies:
-          pre:
-            - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            - sudo dpkg -i google-chrome.deb
-            - sudo sed -i ’s|HERE/chrome\“|HERE/chrome\” --disable-setuid-sandbox|g’ /opt/google/chrome/google-chrome
-            - rm google-chrome.deb
+          command: apt-get update -qq && apt-get install -y build-essential nodejs sed sudo
       - run:
           name: Download Selenium
           command: |
