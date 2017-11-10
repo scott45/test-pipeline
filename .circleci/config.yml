@@ -49,7 +49,7 @@ jobs:
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
           environment:
-            DATABASE_URL: "postgres://ubuntu@localhost:5432/db_name"    
+            DATABASE_URL: "postgres://ubuntu:password@localhost:5432/db_name"    
   test:
     <<: *defaults
     steps:
