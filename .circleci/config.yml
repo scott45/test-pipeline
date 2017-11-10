@@ -89,6 +89,11 @@ jobs:
           paths:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
+      - run:
+          name: Install bundler
+          command: |
+            sudo gem install --no-ri --no-rdoc bundler
+            bundle install
       - run: 
           name: run tests
           command: |
