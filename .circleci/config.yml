@@ -85,6 +85,10 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum “Gemfile.lock” }}
           - v1-dependencies-
+      - save_cache:
+          paths:
+          - ./vendor/bundle
+          key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run: 
           name: run tests
           command: |
