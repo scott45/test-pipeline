@@ -6,13 +6,13 @@ jobs:
         environment:
           - VOF_PATH: ~/vof
           - PG_HOST: localhost
-          - PGUSER: circleci
+          - PGUSER: postgres
           - RAILS_ENV: test
           - RACK_ENV: test
-          - DATABASE_URL: postgresql://circleci@localhost/circlecidb
+          - DATABASE_URL: postgresql://postgres@localhost/circlecidb
       - image: circleci/postgres:9.6
         environment:
-          - POSTGRES_USER: circleci
+          - POSTGRES_USER: postgres
           - POSTGRES_DB: circlecidb
           - POSTGRES_PASSWORD: ''
     docker:
@@ -53,13 +53,13 @@ jobs:
         environment:
           - VOF_PATH: ~/vof
           - PG_HOST: localhost
-          - PGUSER: circleci
+          - PGUSER: postgres
           - RAILS_ENV: test
           - RACK_ENV: test
-          - DATABASE_URL: postgresql://circleci@localhost/circlecidb
+          - DATABASE_URL: postgresql://postgres@localhost/circlecidb
       - image: circleci/postgres:9.6
         environment:
-          - POSTGRES_USER: circleci
+          - POSTGRES_USER: postgres
           - POSTGRES_DB: circlecidb
           - POSTGRES_PASSWORD: ''
 
