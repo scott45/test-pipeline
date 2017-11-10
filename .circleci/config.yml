@@ -3,6 +3,19 @@ jobs:
   build:
     docker:
       - image: ruby:2.4.1
+        environment:
+          - VOF_PATH: ~/vof
+          - PG_HOST: localhost
+          - PGUSER: circleci
+          - RAILS_ENV: test
+          - DATABASE_URL: postgresql://circleci@localhost/circlecidb
+      - image: circleci/postgres:9.6
+        environment:
+          - POSTGRES_USER: circleci
+          - POSTGRES_DB: circlecidb
+          - POSTGRES_PASSWORD: ''
+    docker:
+      - image: ruby:2.4.1
     working_directory: ~/vof
     steps:
       - checkout
