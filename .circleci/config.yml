@@ -88,8 +88,8 @@ jobs:
       - run: 
           name: run tests
           command: |
-          mkdir /tmp/test-results
-          bin/rails test
+            mkdir /tmp/test-results
+            bin/rails test
             
       - store_test_results:
           path: /tmp/test-results
