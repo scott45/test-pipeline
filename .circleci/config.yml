@@ -48,7 +48,7 @@ jobs:
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
           environment:
-            DATABASE_URL: “postgres://circleci@localhost:5432/circlecidb”
+            DATABASE_URL: "postgres://circleci@localhost:5432/circlecidb"
       
       - run:
           name: Install JS runtime
