@@ -6,14 +6,14 @@ jobs:
         environment:
           - VOF_PATH: ~/vof
           - PG_HOST: localhost
-          - PGUSER: postgres
+          - PGUSER: vof-tracker
           - RAILS_ENV: test
           - RACK_ENV: test
-          - DATABASE_URL: postgresql://postgres@localhost/circlecidb
+          - DATABASE_URL: postgresql://vof-tracker@localhost/vof-tracker
       - image: circleci/postgres:9.6
         environment:
-          - POSTGRES_USER: postgres
-          - POSTGRES_DB: circlecidb
+          - POSTGRES_USER: vof-tracker
+          - POSTGRES_DB: vof-tracker
           - POSTGRES_PASSWORD: ''
     docker:
       - image: ruby:2.4.1
@@ -53,14 +53,14 @@ jobs:
         environment:
           - VOF_PATH: ~/vof
           - PG_HOST: localhost
-          - PGUSER: postgres
+          - PGUSER: vof-tracker
           - RAILS_ENV: test
           - RACK_ENV: test
-          - DATABASE_URL: postgresql://postgres@localhost/circlecidb
+          - DATABASE_URL: postgresql://vof-tracker@localhost/circlecidb
       - image: circleci/postgres:9.6
         environment:
-          - POSTGRES_USER: postgres
-          - POSTGRES_DB: circlecidb
+          - POSTGRES_USER: vof-tracker
+          - POSTGRES_DB: vof-tracker
           - POSTGRES_PASSWORD: ''
 
     working_directory: ~/vof      
