@@ -48,6 +48,7 @@ jobs:
           command: |
             sudo service postgresql start
             sudo su - postgres
+            exit
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
             sudo service postgresql restart
