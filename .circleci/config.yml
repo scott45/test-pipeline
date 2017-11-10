@@ -38,12 +38,13 @@ jobs:
           command: |
             sudo gem install --no-ri --no-rdoc bundler
             bundle install 
+      - run:
+          name: start postgres server
+          command: sudo service postgresql start
       - run: 
           name: Set up DB
           command: |
-            sudo service postgresql start
-            bundle exec rake db:create 
-            bundle exec rake db:migrate
+            bundle exec rake db:create db:migrate
             
   test:
     docker:
