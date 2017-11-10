@@ -37,7 +37,7 @@ jobs:
           name: Install bundler
           command: |
             sudo gem install --no-ri --no-rdoc bundler
-            bundle --path=vendor/bundle 
+            bundle install 
       - run: 
           name: Set up DB
           command: |
