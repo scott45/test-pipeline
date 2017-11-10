@@ -6,7 +6,7 @@ dependencies:
     - sudo dpkg -i google-chrome.deb
     - sudo sed -i ’s|HERE/chrome\“|HERE/chrome\” --disable-setuid-sandbox|g’ /opt/google/chrome/google-chrome
     - rm google-chrome.deb
-    
+
 jobs:
   build:
     docker:
@@ -23,9 +23,9 @@ jobs:
           - POSTGRES_DB: circlecidb
           - POSTGRES_PASSWORD: ‘’
 
-   working_directory: ~/vof
+    working_directory: ~/vof
 
-   steps:
+    steps:
       - checkout
       - restore_cache:
           keys:
@@ -77,9 +77,9 @@ jobs:
           - POSTGRES_DB: circlecidb
           - POSTGRES_PASSWORD: ‘’
 
-   working_directory: ~/vof      
+    working_directory: ~/vof      
 
-   steps:
+    steps:
       - checkout
       - restore_cache:
         keys:
