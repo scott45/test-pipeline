@@ -2,17 +2,14 @@ defaults: &defaults
   docker:
     - image: ruby:2.4.1
       environment:
-        - VOF_PATH=~/vof
-        - PG_HOST=localhost
-        - PG_USER=root
-        - RAILS_ENV=test
-        - RACK_ENV=test
-        - DATABASE_URL="postgres://root@localhost:5432/dbname"
-    - image: postgres:9.5
+        - VOF_PATH: ~/vof
+        - PG_HOST: localhost
+        - PG_USER: root
+        - RAILS_ENV: test
+    - image: circleci/postgres:9.6.2-alpine
       environment:
-        - POSTGRES_USER=root 
-        - POSTGRES_DB=dbname
-        - POSTGRES_PASSWORD=""
+        - POSTGRES_USER: root
+        - POSTGRES_DB: circle-test_test
 
   working_directory: ~/vof
 
