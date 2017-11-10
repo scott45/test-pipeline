@@ -44,7 +44,10 @@ jobs:
       - run: 
           name: Set up DB
           command: |
+            psql -d postgres
+            create role app_name login createdb;
             bundle exec rake db:create db:migrate
+            \q
             
   test:
     docker:
