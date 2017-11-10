@@ -82,9 +82,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
-        - v1-dependecies-{{ checksum “Gemfile.lock” }}
-        - v1-dependecies-
+          keys:
+          - v1-dependecies-{{ checksum “Gemfile.lock” }}
+          - v1-dependecies-
       - run: 
           name: run tests
           command: |
