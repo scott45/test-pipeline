@@ -93,14 +93,11 @@ jobs:
           name: run tests
           command: |
             mkdir /tmp/test-results
-            apt-get install -y sudo
-            sudo gem install bundler
             bundle exec rake spec --profile 10 \
                             --format RspecJunitFormatter \
                             --out test_results/rspec.xml \
                             --format progress \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-            
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
@@ -108,7 +105,7 @@ jobs:
           destination: test-results
 
 workflows:
-  version: 2
+  version: 
   build_test and_deployment:
     jobs:
       - build
