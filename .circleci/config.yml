@@ -4,11 +4,11 @@ defaults: &defaults
       environment:
         - VOF_PATH: ~/vof
         - PG_HOST: localhost
-        - PG_USER: root
+        - PG_USER: scotty
         - RAILS_ENV: test
     - image: circleci/postgres:9.6.2-alpine
       environment:
-        - POSTGRES_USER: root
+        - POSTGRES_USER: scotty
         - POSTGRES_DB: circle-test_test
 
   working_directory: ~/vof
