@@ -1,9 +1,3 @@
-dependencies:
-  pre:
-    - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - sudo dpkg -i google-chrome.deb
-    - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-    - rm google-chrome.deb
 
 version: 2
 jobs:
@@ -74,7 +68,14 @@ jobs:
           - POSTGRES_DB: circlecidb
           - POSTGRES_PASSWORD: ‘’
 
-    working_directory: ~/vof      
+    working_directory: ~/vof     
+
+    dependencies:
+      pre:
+        - curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        - sudo dpkg -i google-chrome.deb
+        - sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+        - rm google-chrome.deb 
 
     steps:
       - checkout
@@ -86,6 +87,9 @@ jobs:
           paths:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
+      - run:
+          name: Install System Dependencies
+          command: apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs rake sudo
       - run:
           name: Install bundler
           command: |
@@ -100,6 +104,7 @@ jobs:
           name: Download Selenium
           command: |
             curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+
       - run:
           name: Start Selenium
           command: |
