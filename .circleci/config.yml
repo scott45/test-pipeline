@@ -89,7 +89,7 @@ jobs:
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
           name: Install System Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential sudo nodejs rake 
+          command: sudo apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs rake java
       - run:
           name: Install bundler
           command: |
