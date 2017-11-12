@@ -62,7 +62,7 @@ jobs:
                   
   test:
     docker:
-      - image: ruby:2.4.1
+      - image: circleci/ruby:2.4.1-browsers
         environment:
           - VOF_PATH: ~/vof
           - PG_HOST: localhost
@@ -89,7 +89,7 @@ jobs:
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
           name: Install System Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential nodejs rake sudo
+          command: apt-get update -qq && apt-get install -y build-essential nodejs rake sudo java
       - run:
           name: Install bundler
           command: |
@@ -128,4 +128,5 @@ workflows:
       - test:
           requires:
             - build
+            - dependencies
 
