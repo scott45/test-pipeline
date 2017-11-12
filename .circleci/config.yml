@@ -82,11 +82,19 @@ jobs:
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
           name: Install integration tests Dependencies
-          command: apt-get update -qq && apt-get install -y chromedriver
+          command: apt-get update -qq && apt-get install -y build-essential nodejs rake sudo
+      - run:
+          name: Install bundler
+          command: |
+            sudo gem install --no-ri --no-rdoc bundler
+            bundle install
       - run:
           name: Download Selenium
           command: |
             curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Install webdriver and selenium
+          command: sudo apt-get install -y selenium-webdrive chromedriver-helper
       - run:
           name: Start Selenium
           command: |
