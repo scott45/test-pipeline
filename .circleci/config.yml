@@ -128,5 +128,4 @@ workflows:
       - test:
           requires:
             - build
-            - dependencies
 
