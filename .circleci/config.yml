@@ -34,10 +34,9 @@ jobs:
           paths:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
-
       - run:
           name: Install System Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs rake sudo
+          command: apt-get update -qq && apt-get install -y build-essential postgresql java libpq-dev nodejs rake sudo
       - run:
           name: Install Ruby Dependencies
           command: bundle install
@@ -88,13 +87,16 @@ jobs:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
-          name: Install System Dependencies
-          command: sudo apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs rake java
-      - run:
           name: Install bundler
           command: |
             sudo gem install --no-ri --no-rdoc bundler
             bundle install
+      - run:
+          name: Install java
+          command: |
+            sudo add-apt-repository ppa:webupd8team/java
+            sudo apt-get update
+            sudo apt-get install oracle-java8-set-default
       - run:
           name: Download Selenium
           command: |
