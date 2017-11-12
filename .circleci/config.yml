@@ -52,54 +52,6 @@ jobs:
       - run:
           name: start postgres server
           command: sudo service postgresql start
-
-  chrome:
-    docker:
-      - image: circleci/python:3.6.2-stretch-browsers
-        environment:
-          - VOF_PATH: ~/vof
-          - PG_HOST: localhost
-          - PGUSER: circleci
-          - RAILS_ENV: test
-          - DATABASE_URL: postgresql://circleci@localhost/circlecidb
-      - image: circleci/postgres:9.6
-        environment:
-          - POSTGRES_USER: circleci
-          - POSTGRES_DB: circlecidb
-          - POSTGRES_PASSWORD: ‘’
-
-    working_directory: ~/vof      
-
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum “Gemfile.lock” }}
-          - v1-dependencies-
-      - save_cache:
-          paths:
-          - ./vendor/bundle
-          key: v1-dependencies-{{ checksum “Gemfile.lock” }}
-      - run:
-          name: Install system Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential nodejs rake sudo
-      - run:
-          name: Install bundler
-          command: |
-            sudo gem install --no-ri --no-rdoc bundler
-            bundle install
-      - run:
-          name: Download Selenium
-          command: |
-            curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      - run:
-          name: Install webdriver and selenium
-          command: sudo apt-get install -y selenium-webdrive chromedriver-helper
-      - run:
-          name: Start Selenium
-          command: |
-            java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-          background: true
                   
   test:
     docker:
@@ -136,6 +88,18 @@ jobs:
           command: |
             sudo gem install --no-ri --no-rdoc bundler
             bundle install
+      - run:
+          name: Download Selenium
+          command: |
+            curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Install webdriver and selenium
+          command: sudo apt-get install -y selenium-webdrive chromedriver-helper
+      - run:
+          name: Start Selenium
+          command: |
+            java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
       - run: 
           name: run tests
           command: |
@@ -153,8 +117,7 @@ workflows:
   build_test and_deployment:
     jobs:
       - build
-      - chrome
       - test:
           requires:
             - build
-            - chrome
+
