@@ -36,7 +36,7 @@ jobs:
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
           name: Install System Dependencies
-          command: apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs rake sudo
+          command: apt-get update -qq && apt-get install -y build-essential postgresql java libpq-dev nodejs rake sudo
       - run:
           name: Install Ruby Dependencies
           command: bundle install
@@ -94,9 +94,8 @@ jobs:
       - run:
           name: Install java
           command: |
-            sudo add-apt-repository ppa:webupd8team/java
-            sudo apt-get update
-            sudo apt-get install oracle-java8-set-default
+            sudo apt-get install -y default-jre
+            sudo apt-get install -y default-jdk
       - run:
           name: Download Selenium
           command: |
