@@ -49,6 +49,7 @@ jobs:
           command: |
             sudo gem install --no-ri --no-rdoc bundler
             bundle install
+            figaro install
       - run:
           name: start postgres server
           command: sudo service postgresql start
@@ -95,6 +96,7 @@ jobs:
           command: |
             sudo gem install --no-ri --no-rdoc bundler
             bundle install
+            figaro install
       - run:
           name: Install java
           command: |
