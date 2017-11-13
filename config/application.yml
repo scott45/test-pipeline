@@ -1,0 +1,21 @@
+# Add configuration values here, as shown below.
+#
+# pusher_app_id: "2954"
+# pusher_key: 7381a978f7dd7f9a1117
+# pusher_secret: abdc3b896a0ffb85d373
+# stripe_api_key: sk_test_2J0l093xOyW72XUYJHE4Dv2r
+# stripe_publishable_key: pk_test_ro9jV5SNwGb1yYlQfzG17LHK
+#
+# production:
+#   stripe_api_key: sk_live_EeHnL644i6zo4Iyq4v1KdV9H
+#   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
+
+LOGIN_URL: 'https://api-staging.andela.com/login?redirect_url='
+LOGOUT_URL: 'https://api-staging.andela.com/logout?redirect_url='
+POSTGRES_USER: ''
+POSTGRES_PASSWORD: ''
+POSTGRES_HOST: 'localhost'
+POSTGRES_DB: 'vof_tracker'
+POSTGRES_TEST_DB: 'db_test'
+SECRET_KEY_BASE: '6304b0850bfc07ecdc9337090e24fe9efa29ffecad3ecb174a87ee9ab767f7e32efbe82ba92afb1122e7d2bec6c8a091631d53979082232fbaf8f9ea0dda3b1a' 
+TEST_URL: "https://api-staging.andela.com/logout?redirect_url=http://test.host:80/login"
