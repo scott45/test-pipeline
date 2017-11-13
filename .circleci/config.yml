@@ -116,7 +116,7 @@ jobs:
           name: run tests
           command: |
             mkdir /tmp/test-results
-            bundle exec rake spec
+            bundle exec rspec spec/
 
       - store_test_results:
           path: /tmp/test-results
