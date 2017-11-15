@@ -9,15 +9,16 @@ declare_env_variables() {
   DEPLOYMENT_ENVIRONMENT="staging"
   CIRCLE_PROJECT_REPONAME="test-pipeline"
 
-  TF_VAR_state_path=
-  image_name=
+  IMG_TAG=""
+  PROJECT="VOF"
+  COMMIT_LINK=""
 
   EMOJIS=(":celebrate:"  ":party_dinosaur:"  ":andela:" ":aw-yeah:" ":carlton-dance:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
   RANDOM=$$$(date +%s)
   EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]} ]}
   COMMIT_LINK="https://github.com/scott45/${CIRCLE_PROJECT_REPONAME}/commit/${CIRCLE_SHA1}"
-  DEPLOYMENT_TEXT="Tag: ${IMG_TAG} has just been deployed to ${CONTAINER_NAME} in ${DEPLOYMENT_ENVIRONMENT}  $COMMIT_LINK "
-  SLACK_DEPLOYMENT_TEXT="Tag: <$COMMIT_LINK|${IMG_TAG}> has just been deployed to *${CONTAINER_NAME}* in *${DEPLOYMENT_ENVIRONMENT}* ${EMOJI}"
+  DEPLOYMENT_TEXT="Tag: ${IMG_TAG} has just been deployed as the latest ${PROJECT} in ${DEPLOYMENT_ENVIRONMENT}  $COMMIT_LINK "
+  SLACK_DEPLOYMENT_TEXT="Tag: <$COMMIT_LINK|${IMG_TAG}> has just been deployed to *${PROJECT}* in *${DEPLOYMENT_ENVIRONMENT}* ${EMOJI}"
   DEPLOYMENT_CHANNEL="vof-devops"
 }
 
@@ -73,11 +74,6 @@ echo " Collecting deployment logs"
 saving_deployment_logs() {
 
 }
-
-# echo " Ensuring monitoring is up"
-# restart_monitoring_process() {
-
-# }
 
 echo " Sending slack to vof-channel"
 
