@@ -122,7 +122,42 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
+  deploy:
+    docker:
+      - image: sedzsoft/vof-ci-image
+        environment:
+          - VOF_PATH: ~/vof
+          - PG_HOST: localhost
+          - PGUSER: circleci
+          - RAILS_ENV: test
+          - DATABASE_URL: postgresql://circleci@localhost/circlecidb
+      - image: circleci/postgres:9.6
+        environment:
+          - POSTGRES_USER: circleci
+          - POSTGRES_DB: circlecidb
+          - POSTGRES_PASSWORD: ‘’
+          
+    working_directory: ~/vof
 
+    steps:
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum “Gemfile.lock” }}
+          - v1-dependencies-
+      - save_cache:
+          paths:
+          - ./vendor/bundle
+          key: v1-dependencies-{{ checksum “Gemfile.lock” }}
+      - run:
+          name: Install bundler
+          command: |
+            sudo gem install --no-ri --no-rdoc bundler
+            bundle install
+      
+      - run:
+        name: deploy master to Google Compute
+        command: ./deploy.sh
+  
 workflows:
   version: 2
   build_test and_deployment:
@@ -131,4 +166,10 @@ workflows:
       - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
 
