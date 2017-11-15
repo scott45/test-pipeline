@@ -3,7 +3,7 @@
 set -ex
 set -o pipefail
 
- echo " Declaring environment variables"
+ echo "Declaring environment variables"
 
 declare_env_variables() {
   DEPLOYMENT_ENVIRONMENT="staging"
@@ -23,60 +23,63 @@ declare_env_variables() {
   export TF_VAR_state_path="staging-state/terraform.tfstate"
 }
 
-echo " Pull repo with packer image"
+echo "Pull repo with packer image"
+
 check_out_to_code() {
     git remote add origin -f https://github.com/FlevianK/vof-terraform.git
     git config core.sparsecheckout true
-    echo "vof/*" >> .git/info/sparse-checkout"
-    git pull origin master
+    echo "vof/*" >> .git/info/sparse-checkout
+    git pull --depth=1 origin master
 }
 
-echo " Rebuilding packer image"
+echo "Rebuilding packer image"
+
 build_packer_image() {
 
 }
 
-echo " Filtering new packer image name"
+echo "Filtering new packer image name"
 
 sort_and_pick_out_packer_built_image_name() {
     image_name=$(grep -e "A disk image was created:" packer_ouput.txt | cut -d ' ' -f8) # command will go here for sorting out and assigning the name to a variable which will be used in the terraform command
 }
 
-echo " Initializing terraform"
+echo "Initializing terraform"
 
 Initialise_terraform() {
     terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=production" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=<reserved-ip>"
 }
 
-echo " Running terraform plan command"
+echo "Running terraform plan command"
 
 terraform_plan() {
     terraform plan -var="vof_disk_image=$image_name" -var="state_path=$TF_VAR_state_path"
 }
 
-echo " Building infrastructure"
+echo "Building infrastructure"
 
 build_infrastructure() {
     terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=production" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=<reserved-ip>"
 }
 
-echo " Deploying to ${DEPLOYMENT_ENVIRONMENT}"
+echo "Deploying to ${DEPLOYMENT_ENVIRONMENT}"
 deploy_to_environment() {
 
 }
 
-echo " Turning off error checking"
+echo "Turning off error checking"
 
 turn_off_error_checking() {
     set +e
 }
 
 echo " Collecting deployment logs"
+
 saving_deployment_logs() {
 
 }
 
-echo " Sending slack to vof-channel"
+echo "Sending slack to vof-channel"
 
 notify_vof_team_via_slack() {
 curl -X POST --data-urlencode \
