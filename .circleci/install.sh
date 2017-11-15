@@ -2,16 +2,14 @@
 # Script prerequisite > install jq > https://stedolan.github.io
 
 cd ~
-
-apt-get install unzip
-apt-get install sudo
-apt-get install jq
+su apt-get install zip unzip
+su apt-get install jq
 # Prerequisites
 if [ "$(uname)" == "Darwin" ]; then
     brew install jq
 # For Linux
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    sudo apt-get install --assume-yes jq
+    su apt-get install --assume-yes jq
 fi
 
 # Get URLs for most recent versions
