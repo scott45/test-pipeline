@@ -40,6 +40,7 @@ check_out_to_code() {
 echo "Rebuilding packer image"
 
 build_packer_image() {
+    cd vof-terraform
     cd packer
     packer build packer.json
 }
