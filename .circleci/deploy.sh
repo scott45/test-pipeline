@@ -20,6 +20,7 @@ declare_env_variables() {
   DEPLOYMENT_TEXT="Tag: ${IMG_TAG} has just been deployed as the latest ${PROJECT} in ${DEPLOYMENT_ENVIRONMENT}  $COMMIT_LINK "
   SLACK_DEPLOYMENT_TEXT="Tag: <$COMMIT_LINK|${IMG_TAG}> has just been deployed to *${PROJECT}* in *${DEPLOYMENT_ENVIRONMENT}* ${EMOJI}"
   DEPLOYMENT_CHANNEL="vof-devops"
+  export TF_VAR_state_path="staging-state/terraform.tfstate"
 }
 
 echo " Pull repo with packer image"

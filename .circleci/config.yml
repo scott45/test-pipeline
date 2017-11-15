@@ -153,10 +153,9 @@ jobs:
           command: |
             sudo gem install --no-ri --no-rdoc bundler
             bundle install
-      
       - run:
-        name: deploy master to Google Compute
-        command: ./deploy.sh
+          name: deploy master to Google Compute
+          command: ./deploy.sh
   
 workflows:
   version: 2
