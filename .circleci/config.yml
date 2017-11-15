@@ -151,12 +151,12 @@ jobs:
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
           name: Install packer and terraform
-          command: source install.sh
+          command: bash .circleci/install.sh
       - deploy:
           name: Deploy service
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ] || [ "${CIRCLE_BRANCH}" == "develop" ]; then
-              source deploy.sh
+              bash .circleci/deploy.sh
             fi
   
 workflows:
