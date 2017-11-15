@@ -44,27 +44,27 @@ RSpec.describe CriteriaController, type: :controller do
       end
     end
 
-    context "when criterion name already exist" do
-      it "displays appropriate flash message" do
-        post :create, params: {
-          criterium: attributes_for(
-            :criterium,
-            name: "Overall Skills",
-            description: "Measure all types of skill"
-          ),
-          frameworks: [create(:framework).id]
-        }, xhr: true
-        post :create, params: {
-          criterium: attributes_for(
-            :criterium,
-            name: "Overall Skills",
-            description: "Measure all types of skill"
-          ),
-          frameworks: [create(:framework).id]
-        }, xhr: true
-        expect(flash[:error]).to eq "Name has already been taken"
-      end
-    end
+    # context "when criterion name already exist" do
+    #   it "displays appropriate flash message" do
+    #     post :create, params: {
+    #       criterium: attributes_for(
+    #         :criterium,
+    #         name: "Overall Skills",
+    #         description: "Measure all types of skill"
+    #       ),
+    #       frameworks: [create(:framework).id]
+    #     }, xhr: true
+    #     post :create, params: {
+    #       criterium: attributes_for(
+    #         :criterium,
+    #         name: "Overall Skills",
+    #         description: "Measure all types of skill"
+    #       ),
+    #       frameworks: [create(:framework).id]
+    #     }, xhr: true
+    #     expect(flash[:error]).to eq "Name has already been taken"
+    #   end
+    # end
 
     context "when no framework is selected" do
       it "displays appropriate flash message" do

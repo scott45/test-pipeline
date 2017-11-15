@@ -8,27 +8,32 @@ set -o pipefail
 declare_env_variables() {
   DEPLOYMENT_ENVIRONMENT="staging"
   CIRCLE_PROJECT_REPONAME="test-pipeline"
+  CIRCLE_PROJECT_REPONAME="test-pipeline"
+  PROJECT="VOF-tracker"
+  PACKER_IMG_TAG=""
 
-  IMG_TAG=""
-  PROJECT="VOF"
-  COMMIT_LINK=""
+  if [ "$CIRCLE_BRANCH" == 'master' ]; then
+    DEPLOYMENT_ENVIRONMENT="production"
+  fi
 
   EMOJIS=(":celebrate:"  ":party_dinosaur:"  ":andela:" ":aw-yeah:" ":carlton-dance:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
   RANDOM=$$$(date +%s)
   EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]} ]}
-  COMMIT_LINK="https://github.com/scott45/${CIRCLE_PROJECT_REPONAME}/commit/${CIRCLE_SHA1}"
-  DEPLOYMENT_TEXT="Tag: ${IMG_TAG} has just been deployed as the latest ${PROJECT} in ${DEPLOYMENT_ENVIRONMENT}  $COMMIT_LINK "
+  COMMIT_LINK="https://github.com/scott45/${CIRCLE_PROJECT_REPONAME}/commit/${CIRCLE_BUILD_NUM}"
+  DEPLOYMENT_TEXT="Tag: ${PACKER_IMG_TAG} has just been deployed as the latest ${PROJECT} in ${DEPLOYMENT_ENVIRONMENT}  $COMMIT_LINK "
   SLACK_DEPLOYMENT_TEXT="Tag: <$COMMIT_LINK|${IMG_TAG}> has just been deployed to *${PROJECT}* in *${DEPLOYMENT_ENVIRONMENT}* ${EMOJI}"
   DEPLOYMENT_CHANNEL="vof-devops"
-  export TF_VAR_state_path="staging-state/terraform.tfstate"
+
+  TF_VAR_state_path="staging-state/terraform.tfstate"
+  RESERVED_IP=""
 }
 
 echo "Pull repo with packer image"
 
 check_out_to_code() {
     mkdir vof-repo
-    git init vof-repo
     cd vof-repo
+    git init vof-repo
     git remote add origin -f https://github.com/FlevianK/vof-terraform.git
     git config core.sparsecheckout true
     echo "packer/*" >> .git/info/sparse-checkout
@@ -52,7 +57,7 @@ sort_and_pick_out_packer_built_image_name() {
 echo "Initializing terraform"
 
 Initialise_terraform() {
-    terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=production" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=<reserved-ip>"
+    terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=${RESERVED_IP}"
 }
 
 echo "Running terraform plan command"
@@ -64,7 +69,7 @@ terraform_plan() {
 echo "Building infrastructure"
 
 build_infrastructure() {
-    terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=production" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=<reserved-ip>"
+    terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=${RESERVED_IP}"
 }
 
 echo "Deploying to ${DEPLOYMENT_ENVIRONMENT}"
