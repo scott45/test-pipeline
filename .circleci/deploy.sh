@@ -64,7 +64,7 @@ build_infrastructure() {
 
 echo "Deploying to ${DEPLOYMENT_ENVIRONMENT}"
 deploy_to_environment() {
-
+    :
 }
 
 echo "Turning off error checking"
