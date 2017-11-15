@@ -31,6 +31,7 @@ check_out_to_code() {
     cd vof-repo
     git remote add origin -f https://github.com/FlevianK/vof-terraform.git
     git config core.sparsecheckout true
+    echo "packer/*" >> .git/info/sparse-checkout
     echo "vof/*" >> .git/info/sparse-checkout
     git pull --depth=1 origin master
 }
@@ -38,7 +39,8 @@ check_out_to_code() {
 echo "Rebuilding packer image"
 
 build_packer_image() {
-    :
+    cd packer
+    packer build packer.json
 }
 
 echo "Filtering new packer image name"
