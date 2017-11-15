@@ -159,7 +159,7 @@ jobs:
             bundle install
       - run:
           name: Install packer and terraform
-          command: command: ./install.sh
+          command: ./install.sh
       - run:
           name: deploy master to Google Compute
           command: ./deploy.sh
