@@ -150,19 +150,14 @@ jobs:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
-          name: Install System Dependencies
-          command: apt-get update -qq && sudo apt-get install -y build-essential libpq-dev nodejs rake sudo
-      - run:
-          name: Install bundler
-          command: |
-            sudo gem install --no-ri --no-rdoc bundler
-            bundle install
-      - run:
           name: Install packer and terraform
           command: ./install.sh
-      - run:
-          name: deploy master to Google Compute
-          command: ./deploy.sh
+      - deploy:
+          name: Deploy service
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ] || [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              ./deploy.sh
+            fi
   
 workflows:
   version: 2
