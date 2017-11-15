@@ -3,6 +3,9 @@
 
 cd ~
 
+apt-get install unzip
+apt-get install sudo
+apt-get install jq
 # Prerequisites
 if [ "$(uname)" == "Darwin" ]; then
     brew install jq
