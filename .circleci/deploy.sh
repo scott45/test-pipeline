@@ -43,7 +43,7 @@ sort_and_pick_out_packer_built_image_name() {
 echo " Initializing terraform"
 
 Initialise_terraform() {
-    terraform init -backend-config="path=$TF_VAR_state_path"
+    terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=production" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=<reserved-ip>"
 }
 
 echo " Running terraform plan command"
@@ -55,7 +55,7 @@ terraform_plan() {
 echo " Building infrastructure"
 
 build_infrastructure() {
-    terraform apply -var="vof_disk_image=$image_name" -var="state_path=$TF_VAR_state_path"
+    terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=production" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=<reserved-ip>"
 }
 
 echo " Deploying to ${DEPLOYMENT_ENVIRONMENT}"
