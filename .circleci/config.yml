@@ -149,6 +149,9 @@ jobs:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
+          name: Install System Dependencies
+          command: apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs sudo
+      - run:
           name: Install bundler
           command: |
             sudo gem install --no-ri --no-rdoc bundler
