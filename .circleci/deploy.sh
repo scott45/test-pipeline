@@ -34,7 +34,9 @@ check_out_to_code() {
 
 echo "Rebuilding packer image"
 
-build_packer_image() {}
+build_packer_image() {
+    :
+}
 
 echo "Filtering new packer image name"
 
@@ -73,7 +75,9 @@ turn_off_error_checking() {
 
 echo " Collecting deployment logs"
 
-saving_deployment_logs() {}
+saving_deployment_logs() {
+    :
+}
 
 echo "Sending slack to vof-channel"
 
