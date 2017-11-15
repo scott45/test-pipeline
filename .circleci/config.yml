@@ -1,4 +1,3 @@
-
 version: 2
 jobs:
   build:
@@ -124,7 +123,7 @@ jobs:
 
   deploy:
     docker:
-      - image: ruby:2.4.1
+      - image: sedzsoft/vof-ci-ruby-image
         environment:
           - VOF_PATH: ~/vof
           - PG_HOST: localhost
@@ -149,9 +148,6 @@ jobs:
           paths:
           - ./vendor/bundle
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
-      - run:
-          name: Install packer and terraform
-          command: bash .circleci/install.sh
       - deploy:
           name: Deploy service
           command: |
