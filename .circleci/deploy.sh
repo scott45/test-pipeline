@@ -26,8 +26,8 @@ declare_env_variables() {
 echo "Pull repo with packer image"
 
 check_out_to_code() {
-    git remote set-url origin https://github.com/FlevianK/vof-terraform.git
-    git remote add origin -f https://github.com/FlevianK/vof-terraform.git
+    git remote set-url vof https://github.com/FlevianK/vof-terraform.git
+    git remote add vof -f https://github.com/FlevianK/vof-terraform.git
     git config core.sparsecheckout true
     echo "vof/*" >> .git/info/sparse-checkout
     git pull --depth=1 origin master
