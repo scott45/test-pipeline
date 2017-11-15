@@ -164,10 +164,10 @@ workflows:
   build_test and_deployment:
     jobs:
       - build
-      - test:
+      - test
           # requires:
           #   - build
-      - deploy:
-          requires:
+      - deploy
+          # requires:
             # - test
 
