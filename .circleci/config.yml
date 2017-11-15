@@ -124,7 +124,7 @@ jobs:
 
   deploy:
     docker:
-      - image: sedzsoft/vof-ci-image
+      - image: ruby:2.4.1
         environment:
           - VOF_PATH: ~/vof
           - PG_HOST: localhost
@@ -157,6 +157,9 @@ jobs:
           command: |
             sudo gem install --no-ri --no-rdoc bundler
             bundle install
+      - run:
+          name: Install packer and terraform
+          command: command: ./install.sh
       - run:
           name: deploy master to Google Compute
           command: ./deploy.sh
