@@ -140,6 +140,7 @@ jobs:
     working_directory: ~/vof
 
     steps:
+      - checkout
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum “Gemfile.lock” }}
@@ -150,7 +151,7 @@ jobs:
           key: v1-dependencies-{{ checksum “Gemfile.lock” }}
       - run:
           name: Install System Dependencies
-          command: sudo apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs sudo
+          command: sudo apt-get update -qq && sudo apt-get install -y build-essential libpq-dev nodejs rake sudo
       - run:
           name: Install bundler
           command: |
