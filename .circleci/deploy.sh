@@ -40,7 +40,7 @@ check_out_to_code() {
 generate_service_account() {
     pwd
     cd ./vof-terraform
-    pushd ./shared/account.json
+    pushd ./shared/account.json*
       cat ${SERVICE_ACCOUNT}
     popd
     pwd
