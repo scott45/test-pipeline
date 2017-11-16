@@ -47,14 +47,13 @@ generate_service_account() {
 echo "Rebuilding packer image"
 
 build_packer_image() {
-    touch /home/circleci/vof-repo/packer/packer_ouput.log
-    cd /home/circleci/vof-repo/packer
-    ls -al
-    RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee /home/circleci/vof-repo/packer/packer_ouput.log
-    ls -al
-    echo /home/circleci/vof-repo/packer/packer_ouput.log
-    grep 'A disk image was created' /home/circleci/vof-repo/packer/packer_output.log
-    PACKER_IMG_TAG="$(grep 'A disk image was created' /home/circleci/vof-repo/packer/packer_output.log | cut -d':' -f3)"
+    pushd /home/circleci/vof-repo/packer
+        touch packer_ouput.log
+        RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee packer_ouput.log
+        grep 'A disk image was created' packer_output.log
+        PACKER_IMG_TAG="$(grep 'A disk image was created' packer_output.log | cut -d':' -f3)"
+    popd
+    echo "$PACKER_IMG_TAG"
 }
 pwd
 echo "Initializing terraform"
