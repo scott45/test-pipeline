@@ -49,12 +49,7 @@ echo "Rebuilding packer image"
 build_packer_image() {
     cd /home/circleci/vof-repo/packer
     RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee packer_ouput.log
-}
-pwd
-echo "Filtering new packer image name"
-
-sort_and_pick_out_packer_built_image_name() {
-    PACKER_IMG_TAG="$(grep 'A disk image was created' /home/circleci/vof-repo/packer/packer_output.log | cut -d':' -f3)" 
+    PACKER_IMG_TAG="$(grep 'A disk image was created' packer_output.log | cut -d':' -f3)"
 }
 pwd
 echo "Initializing terraform"
@@ -86,7 +81,6 @@ main() {
   check_out_to_code
   generate_service_account
   build_packer_image
-  sort_and_pick_out_packer_built_image_name
   Initialise_terraform
   build_infrastructure
   notify_vof_team_via_slack
