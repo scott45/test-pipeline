@@ -41,7 +41,7 @@ generate_service_account() {
     pwd
     cd ./vof-terraform/shared
     touch account.json
-    mv ${SERVICE_ACCOUNT} account.json
+    cp ${SERVICE_ACCOUNT} account.json
     pwd
 }
 
