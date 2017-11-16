@@ -48,9 +48,8 @@ echo "Rebuilding packer image"
 
 build_packer_image() {
     pushd /home/circleci/vof-repo/packer
-        touch packer_ouput.log
-        RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee packer_ouput.log
-        `grep 'A disk image was created' packer_output.log`
+        touch packer_output.log
+        RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee packer_output.log
         PACKER_IMG_TAG="$(grep 'A disk image was created' packer_output.log | cut -d':' -f3)"
     popd
     echo "$PACKER_IMG_TAG"
@@ -59,15 +58,18 @@ pwd
 echo "Initializing terraform"
 
 Initialise_terraform() {
-    cd /home/circleci/vof-repo/vof
-    export TF_VAR_state_path="vof/state/${DEPLOYMENT_ENVIRONMENT}/terraform.tfstate"
-    terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
+    pushd /home/circleci/vof-repo/vof
+        export TF_VAR_state_path="vof/state/${DEPLOYMENT_ENVIRONMENT}/terraform.tfstate"
+        terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
+    popd
 }
 
 echo "Building infrastructure"
 
 build_infrastructure() {
-    terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
+    pushd /home/circleci/vof-repo/vof
+        terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
+    popd
 }
 
 echo "Sending slack to vof-channel"
