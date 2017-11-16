@@ -37,7 +37,7 @@ check_out_to_code() {
 }
 
 generate_service_account() {
-    cd shared
+    cd vof-rep/vof-terraform
     pushd vof-terraform/shared/account.json
       cat ${SERVICE_ACCOUNT}
     popd
