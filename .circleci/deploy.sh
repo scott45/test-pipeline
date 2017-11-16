@@ -30,51 +30,42 @@ declare_env_variables() {
 echo "Pull repo with packer image"
 
 check_out_to_code() {
-    mkdir vof-repo
-    cd vof-repo
-    git init vof-repo
-    git clone https://github.com/FlevianK/vof-terraform.git
+    mkdir -p /home/circleci/vof-repo
+    git clone https://github.com/FlevianK/vof-terraform.git /home/circleci/vof-repo
     pwd 
 }
 
 generate_service_account() {
     pwd
-    cd ./vof-terraform/shared
-    touch account.json
-    echo ${SERVICE_ACCOUNT} > account.json
+    touch /home/circleci/vof-repo/shared/account.json
+    echo ${SERVICE_ACCOUNT} > /home/circleci/vof-repo/shared/account.json
     pwd
-    cd ..
 }
 
 echo "Rebuilding packer image"
 
 build_packer_image() {
-    cd packer
-    packer build packer.json
+    cd /home/circleci/vof-repo/packer
+    packer build packer.json 2>&1 | tee packer_ouput.log
 }
 
 echo "Filtering new packer image name"
 
 sort_and_pick_out_packer_built_image_name() {
-    image_name=$(grep -e "A disk image was created:" packer_ouput.txt | cut -d ' ' -f8) # command will go here for sorting out and assigning the name to a variable which will be used in the terraform command
+    PACKER_IMG_TAG="$(grep 'A disk image was created' /home/circleci/vof-repo/packer/packer_output.log | cut -d':' -f3)" 
 }
 
 echo "Initializing terraform"
 
 Initialise_terraform() {
-    terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=${RESERVED_IP}"
-}
-
-echo "Running terraform plan command"
-
-terraform_plan() {
-    terraform plan -var="vof_disk_image=$image_name" -var="state_path=$TF_VAR_state_path"
+    cd /home/circleci/vof-repo/vof
+    terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
 }
 
 echo "Building infrastructure"
 
 build_infrastructure() {
-    terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=<packer-image-name>" -var="reserved_env_ip=${RESERVED_IP}"
+    terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
 }
 
 echo "Deploying to ${DEPLOYMENT_ENVIRONMENT}"
@@ -111,7 +102,6 @@ main() {
   build_packer_image
   sort_and_pick_out_packer_built_image_name
   Initialise_terraform
-  terraform_plan
   build_infrastructure
   deploy_to_environment
   turn_off_error_checking
