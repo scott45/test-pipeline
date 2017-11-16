@@ -7,12 +7,14 @@ echo "Declaring environment variables"
 
 declare_env_variables() {
   DEPLOYMENT_ENVIRONMENT="staging"
+  RESERVED_IP=${STAGING_RESERVED_IP}
   CIRCLE_PROJECT_REPONAME="test-pipeline"
   PROJECT="VOF-tracker"
   PACKER_IMG_TAG=""
 
   if [ "$CIRCLE_BRANCH" == 'master' ]; then
     DEPLOYMENT_ENVIRONMENT="production"
+    RESERVED_IP=${PRODUCTION_RESERVED_IP}
   fi
 
   EMOJIS=(":celebrate:"  ":party_dinosaur:"  ":andela:" ":aw-yeah:" ":carlton-dance:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
@@ -23,8 +25,8 @@ declare_env_variables() {
   SLACK_DEPLOYMENT_TEXT="Tag: <$COMMIT_LINK|${IMG_TAG}> has just been deployed to *${PROJECT}* in *${DEPLOYMENT_ENVIRONMENT}* ${EMOJI}"
   DEPLOYMENT_CHANNEL="vof-devops"
 
-  TF_VAR_state_path="staging-state/terraform.tfstate"
-  RESERVED_IP=""
+  TF_VAR_state_path="state/${DEPLOYMENT_ENVIRONMENT}/terraform.tfstate"
+  
 }
 
 echo "Pull repo with packer image"
@@ -46,19 +48,20 @@ echo "Rebuilding packer image"
 
 build_packer_image() {
     cd /home/circleci/vof-repo/packer
-    packer build packer.json 2>&1 | tee packer_ouput.log
+    RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee packer_ouput.log
 }
-
+pwd
 echo "Filtering new packer image name"
 
 sort_and_pick_out_packer_built_image_name() {
     PACKER_IMG_TAG="$(grep 'A disk image was created' /home/circleci/vof-repo/packer/packer_output.log | cut -d':' -f3)" 
 }
-
+pwd
 echo "Initializing terraform"
 
 Initialise_terraform() {
     cd /home/circleci/vof-repo/vof
+    export TF_VAR_state_path="vof/state/${DEPLOYMENT_ENVIRONMENT}/terraform.tfstate"
     terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
 }
 
@@ -66,23 +69,6 @@ echo "Building infrastructure"
 
 build_infrastructure() {
     terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
-}
-
-echo "Deploying to ${DEPLOYMENT_ENVIRONMENT}"
-deploy_to_environment() {
-    :
-}
-
-echo "Turning off error checking"
-
-turn_off_error_checking() {
-    set +e
-}
-
-echo " Collecting deployment logs"
-
-saving_deployment_logs() {
-    :
 }
 
 echo "Sending slack to vof-channel"
@@ -103,9 +89,6 @@ main() {
   sort_and_pick_out_packer_built_image_name
   Initialise_terraform
   build_infrastructure
-  deploy_to_environment
-  turn_off_error_checking
-  saving_deployment_logs
   notify_vof_team_via_slack
 
 }
