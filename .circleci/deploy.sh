@@ -3,11 +3,10 @@
 set -ex
 set -o pipefail
 
- echo "Declaring environment variables"
+echo "Declaring environment variables"
 
 declare_env_variables() {
   DEPLOYMENT_ENVIRONMENT="staging"
-  CIRCLE_PROJECT_REPONAME="test-pipeline"
   CIRCLE_PROJECT_REPONAME="test-pipeline"
   PROJECT="VOF-tracker"
   PACKER_IMG_TAG=""
