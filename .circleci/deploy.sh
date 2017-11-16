@@ -36,6 +36,12 @@ check_out_to_code() {
     git clone https://github.com/FlevianK/vof-terraform.git
 }
 
+generate_service_account() {
+    pushd vof-terraform/shared/account.json
+      cat ${SERVICE_ACCOUNT}
+    popd
+}
+
 echo "Rebuilding packer image"
 
 build_packer_image() {
@@ -98,6 +104,7 @@ main() {
 
   declare_env_variables
   check_out_to_code
+  generate_service_account
   build_packer_image
   sort_and_pick_out_packer_built_image_name
   Initialise_terraform
