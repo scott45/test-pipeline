@@ -34,13 +34,16 @@ check_out_to_code() {
     cd vof-repo
     git init vof-repo
     git clone https://github.com/FlevianK/vof-terraform.git
+    pwd 
 }
 
 generate_service_account() {
-    cd vof-repo/vof-terraform
-    pushd vof-terraform/shared/account.json
+    pwd
+    cd ./vof-terraform
+    pushd ./shared/account.json
       cat ${SERVICE_ACCOUNT}
     popd
+    pwd
 }
 
 echo "Rebuilding packer image"
