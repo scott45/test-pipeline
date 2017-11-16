@@ -50,7 +50,7 @@ build_packer_image() {
     pushd /home/circleci/vof-repo/packer
         touch packer_output.log
         RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee packer_output.log
-        PACKER_IMG_TAG="$(grep 'A disk image was created' packer_output.log | cut -d':' -f3)"
+        PACKER_IMG_TAG="$(grep 'A disk image was created:' packer_output.log | cut -d' ' -f8)"
     popd
     echo "$PACKER_IMG_TAG"
 }
