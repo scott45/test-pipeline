@@ -51,6 +51,9 @@ build_packer_image() {
     cd /home/circleci/vof-repo/packer
     ls -al
     RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee /home/circleci/vof-repo/packer/packer_ouput.log
+    ls -al
+    echo /home/circleci/vof-repo/packer/packer_ouput.log
+    grep 'A disk image was created' /home/circleci/vof-repo/packer/packer_output.log
     PACKER_IMG_TAG="$(grep 'A disk image was created' /home/circleci/vof-repo/packer/packer_output.log | cut -d':' -f3)"
 }
 pwd
