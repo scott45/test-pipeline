@@ -29,55 +29,53 @@ declare_env_variables() {
   
 }
 
-echo "Pull repo with packer image"
+check_out_infrastructure_code() {
+    echo "Checkout infrastructure code"
 
-check_out_to_code() {
     mkdir -p /home/circleci/vof-repo
     git clone https://github.com/FlevianK/vof-terraform.git /home/circleci/vof-repo
-    pwd 
 }
 
 generate_service_account() {
-    pwd
     touch /home/circleci/vof-repo/shared/account.json
     echo ${SERVICE_ACCOUNT} > /home/circleci/vof-repo/shared/account.json
-    pwd
 }
 
-echo "Rebuilding packer image"
-
 build_packer_image() {
+    echo "Rebuilding packer image"
+
     pushd /home/circleci/vof-repo/packer
         touch packer_output.log
         RAILS_ENV="$DEPLOYMENT_ENVIRONMENT" VOF_PATH="/home/circleci/vof" packer build packer.json 2>&1 | tee packer_output.log
         PACKER_IMG_TAG="$(grep 'A disk image was created:' packer_output.log | cut -d' ' -f8)"
     popd
+    
     echo "$PACKER_IMG_TAG"
 }
-pwd
-echo "Initializing terraform"
 
-Initialise_terraform() {
+initialise_terraform() {
+    echo "Initializing terraform"
+
     pushd /home/circleci/vof-repo/vof
         export TF_VAR_state_path="vof/state/${DEPLOYMENT_ENVIRONMENT}/terraform.tfstate"
         terraform init -backend-config="path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
     popd
 }
 
-echo "Building infrastructure"
-
 build_infrastructure() {
+    echo "Building VOF infrastructure and deploying VOF application"
+
     pushd /home/circleci/vof-repo/vof
         terraform apply -var="state_path=$TF_VAR_state_path" -var="env_name=${DEPLOYMENT_ENVIRONMENT}" -var="vof_disk_image=${PACKER_IMG_TAG}" -var="reserved_env_ip=${RESERVED_IP}"
     popd
 }
 
-echo "Sending slack to vof-channel"
-
 notify_vof_team_via_slack() {
-curl -X POST --data-urlencode \
-"payload={\"channel\": \"${DEPLOYMENT_CHANNEL}\", \"username\": \"DeployNotification\", \"text\": \"${SLACK_DEPLOYMENT_TEXT}\", \"icon_emoji\": \":rocket:\"}" \
-https://hooks.slack.com/services/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
+  echo "Sending success message to slack"
+
+  curl -X POST --data-urlencode \
+  "payload={\"channel\": \"${DEPLOYMENT_CHANNEL}\", \"username\": \"DeployNotification\", \"text\": \"${SLACK_DEPLOYMENT_TEXT}\", \"icon_emoji\": \":rocket:\"}" \
+  https://hooks.slack.com/services/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
 }
 
 main() {
@@ -87,7 +85,7 @@ main() {
   check_out_to_code
   generate_service_account
   build_packer_image
-  Initialise_terraform
+  initialise_terraform
   build_infrastructure
   notify_vof_team_via_slack
 
