@@ -1,4 +1,4 @@
-default: &default
+default: &defaults
   docker:
       - image: sedzsoft/vof-ci-ruby-image
         environment:
@@ -13,7 +13,7 @@ default: &default
           - POSTGRES_DB: circlecidb
           - POSTGRES_PASSWORD: ''
 
-    working_directory: ~/vof
+  working_directory: ~/vof
 
 version: 2
 jobs:
