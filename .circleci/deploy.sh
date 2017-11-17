@@ -82,7 +82,7 @@ main() {
   echo "Deployment script invoked at $(date)" >> /tmp/script.log
 
   declare_env_variables
-  check_out_to_code
+  check_out_infrastructure_code
   generate_service_account
   build_packer_image
   initialise_terraform
