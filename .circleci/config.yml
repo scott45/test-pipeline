@@ -1,17 +1,17 @@
 default: &defaults
   docker:
-      - image: sedzsoft/vof-ci-ruby-image
-        environment:
-          - VOF_PATH: /home/circleci/vof
-          - PG_HOST: localhost
-          - PGUSER: circleci
-          - RAILS_ENV: test
-          - DATABASE_URL: postgresql://circleci@localhost/circlecidb
-      - image: postgres:9.6
-        environment:
-          - POSTGRES_USER: circleci
-          - POSTGRES_DB: circlecidb
-          - POSTGRES_PASSWORD: ''
+    - image: sedzsoft/vof-ci-ruby-image
+      environment:
+        - VOF_PATH: /home/circleci/vof
+        - PG_HOST: localhost
+        - PGUSER: circleci
+        - RAILS_ENV: test
+        - DATABASE_URL: postgresql://circleci@localhost/circlecidb
+    - image: postgres:9.6
+      environment:
+        - POSTGRES_USER: circleci
+        - POSTGRES_DB: circlecidb
+        - POSTGRES_PASSWORD: ''
 
   working_directory: ~/vof
 
@@ -19,6 +19,8 @@ version: 2
 jobs:
   build:
     <<: *defaults
+    docker:
+      - image: ruby:2.4.1
     steps:
       - checkout
       - restore_cache:
