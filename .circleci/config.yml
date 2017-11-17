@@ -34,6 +34,9 @@ jobs:
           name: Install Ruby Dependencies
           command: bundle install
       - run:
+          name: start postgresql server
+          command: sudo service postgresql restart
+      - run:
           name: Waiting for Postgres to be ready
           command: |
             for i in `seq 1 10`;
